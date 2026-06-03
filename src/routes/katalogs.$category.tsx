@@ -71,6 +71,13 @@ function CatalogPage() {
   const [avail, setAvail] = useState<string[]>([]);
   const [sort, setSort] = useState<"popular" | "accuracy" | "new">("popular");
 
+  // Sync industry filter when URL search (sub/industry) changes
+  // (back/forward, or clicking a different sub-link on the same route).
+  useEffect(() => {
+    setIndustries(initialIndustry ? [initialIndustry] : []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category, search.sub, search.industry]);
+
   const ipOptions = useMemo(() => Array.from(new Set(products.map((p) => p.ip_class).filter(Boolean))) as string[], [products]);
 
   const filtered = useMemo(() => {
