@@ -19,6 +19,8 @@ export const Route = createFileRoute("/katalogs/$category")({
 
 function CatalogPage() {
   const { category } = Route.useParams();
+  const search = Route.useSearch() as { industry?: string };
+  const initialIndustry = search.industry;
 
   const { data: cat } = useQuery({
     queryKey: ["category", category],
