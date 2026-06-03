@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { lv } from "@/lib/i18n";
 import { useRequestModal } from "@/components/request-modal-context";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 
 export const Route = createFileRoute("/kontakti")({
   head: () => ({ meta: [{ title: "Kontakti | geobalt.lv" }] }),
