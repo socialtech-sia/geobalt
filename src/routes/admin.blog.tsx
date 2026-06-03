@@ -38,22 +38,22 @@ function BlogPage() {
   const remove = async (p: Post) => {
     const { error } = await supabase.from("blog_posts").delete().eq("id", p.id);
     if (error) return toast.error(error.message);
-    toast.success("Статья удалена");
+    toast.success("Raksts dzēsts");
     qc.invalidateQueries({ queryKey: ["admin", "blog"] });
   };
 
   return (
     <div className="space-y-6 max-w-5xl">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold text-ink">Блог</h1>
+        <h1 className="font-display text-2xl font-bold text-ink">Blogs</h1>
         <button onClick={() => setEditing({ title_lv: "", slug: "", status: "draft", published_at: new Date().toISOString().slice(0, 16) })} className="rounded-md bg-accent text-white text-sm font-medium px-3 py-2 hover:bg-accent-d flex items-center gap-1.5">
-          <Plus className="h-4 w-4" /> Новая статья
+          <Plus className="h-4 w-4" /> Jauns raksts
         </button>
       </div>
 
       <div className="rounded-xl bg-card border border-line overflow-hidden">
         <div className="grid grid-cols-[80px_1fr_120px_120px_140px_120px] gap-2 px-3 py-2 bg-paper-2 text-xs font-mono uppercase text-muted">
-          <span>Обложка</span><span>Заголовок</span><span>Тег</span><span>Статус</span><span>Дата</span><span>Действия</span>
+          <span>Vāks</span><span>Virsraksts</span><span>Tags</span><span>Statuss</span><span>Datums</span><span>Darbības</span>
         </div>
         {posts.map((p) => (
           <div key={p.id} className="grid grid-cols-[80px_1fr_120px_120px_140px_120px] gap-2 px-3 py-2.5 border-t border-line items-center text-sm">
@@ -64,7 +64,7 @@ function BlogPage() {
             <div className="text-muted text-xs truncate">{p.tag_lv ?? "—"}</div>
             <div>
               <span className={`pill text-xs ${p.status === "published" ? "bg-green/15 text-green" : "bg-paper-2 text-muted"}`}>
-                {p.status === "published" ? "Опубл." : "Черновик"}
+                {p.status === "published" ? "Publ." : "Melnraksts"}
               </span>
             </div>
             <div className="font-mono text-xs text-muted">{new Date(p.published_at).toLocaleString("ru-RU")}</div>
@@ -74,7 +74,7 @@ function BlogPage() {
             </div>
           </div>
         ))}
-        {posts.length === 0 && <div className="p-8 text-center text-muted text-sm">Пусто</div>}
+        {posts.length === 0 && <div className="p-8 text-center text-muted text-sm">Tukšs</div>}
       </div>
 
       {editing && <PostEditor initial={editing} onClose={() => setEditing(null)} />}
@@ -96,7 +96,7 @@ function PostEditor({ initial, onClose }: { initial: Partial<Post>; onClose: () 
 
   const save = useMutation({
     mutationFn: async (data: Partial<Post>) => {
-      if (!data.title_lv || !data.slug) throw new Error("Заполните заголовок и slug");
+      if (!data.title_lv || !data.slug) throw new Error("Aizpildiet virsrakstu un slug");
       const payload = {
         title_lv: data.title_lv,
         slug: data.slug,
@@ -116,7 +116,7 @@ function PostEditor({ initial, onClose }: { initial: Partial<Post>; onClose: () 
       }
     },
     onSuccess: () => {
-      toast.success("Сохранено");
+      toast.success("Saglabāts");
       qc.invalidateQueries({ queryKey: ["admin", "blog"] });
       onClose();
     },
@@ -133,7 +133,7 @@ function PostEditor({ initial, onClose }: { initial: Partial<Post>; onClose: () 
   };
 
   const handleClose = () => {
-    if (dirty && !confirm("Есть несохранённые изменения. Закрыть?")) return;
+    if (dirty && !confirm("Ir nesaglabātas izmaiņas. Aizvērt?")) return;
     onClose();
   };
 
@@ -143,57 +143,57 @@ function PostEditor({ initial, onClose }: { initial: Partial<Post>; onClose: () 
     <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4 overflow-y-auto" onClick={handleClose}>
       <div className="bg-card rounded-xl border border-line max-w-4xl w-full p-6 space-y-4 my-8" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between">
-          <h2 className="font-display text-xl font-bold">{initial.id ? "Редактировать статью" : "Новая статья"}</h2>
+          <h2 className="font-display text-xl font-bold">{initial.id ? "Rediģēt rakstu" : "Jauns raksts"}</h2>
           <button onClick={handleClose}><X className="h-5 w-5 text-muted" /></button>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
-          <Field label="Заголовок (LV)"><input className={inputCls} value={form.title_lv ?? ""} onChange={(e) => set("title_lv", e.target.value)} /></Field>
+          <Field label="Virsraksts (LV)"><input className={inputCls} value={form.title_lv ?? ""} onChange={(e) => set("title_lv", e.target.value)} /></Field>
           <Field label="Slug"><input className={inputCls + " font-mono text-xs"} value={form.slug ?? ""} onChange={(e) => { set("slug", e.target.value); setSlugTouched(true); }} /></Field>
-          <Field label="Тег (LV)"><input className={inputCls} value={form.tag_lv ?? ""} onChange={(e) => set("tag_lv", e.target.value)} /></Field>
-          <Field label="Дата публикации"><input type="datetime-local" className={inputCls} value={form.published_at?.slice(0, 16) ?? ""} onChange={(e) => set("published_at", e.target.value)} /></Field>
-          <Field label="Анонс (LV)" ><textarea rows={2} className={inputCls} value={form.excerpt_lv ?? ""} onChange={(e) => set("excerpt_lv", e.target.value)} /></Field>
-          <Field label="Статус">
+          <Field label="Tags (LV)"><input className={inputCls} value={form.tag_lv ?? ""} onChange={(e) => set("tag_lv", e.target.value)} /></Field>
+          <Field label="Publicēšanas datums"><input type="datetime-local" className={inputCls} value={form.published_at?.slice(0, 16) ?? ""} onChange={(e) => set("published_at", e.target.value)} /></Field>
+          <Field label="Anonss (LV)" ><textarea rows={2} className={inputCls} value={form.excerpt_lv ?? ""} onChange={(e) => set("excerpt_lv", e.target.value)} /></Field>
+          <Field label="Statuss">
             <select className={inputCls} value={form.status ?? "draft"} onChange={(e) => set("status", e.target.value)}>
-              <option value="draft">Черновик</option>
-              <option value="published">Опубликован</option>
+              <option value="draft">Melnraksts</option>
+              <option value="published">Publicēts</option>
             </select>
           </Field>
         </div>
 
-        <Field label="Обложка">
+        <Field label="Vāks">
           {form.cover_url ? (
             <div className="flex items-center gap-3 mb-2">
               <img src={form.cover_url} alt="" className="h-24 w-40 object-cover bg-paper-2 rounded border border-line" />
-              <button onClick={() => set("cover_url", "")} className="text-xs text-red-600 hover:underline">Удалить</button>
+              <button onClick={() => set("cover_url", "")} className="text-xs text-red-600 hover:underline">Dzēst</button>
             </div>
           ) : null}
           <label className="inline-flex items-center gap-2 rounded-md bg-card border border-line px-3 py-2 text-sm cursor-pointer hover:bg-paper">
-            <Upload className="h-4 w-4" /> {uploading ? "Загрузка…" : form.cover_url ? "Заменить" : "Загрузить"}
+            <Upload className="h-4 w-4" /> {uploading ? "Ielādē…" : form.cover_url ? "Aizstāt" : "Augšupielādēt"}
             <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0])} />
           </label>
         </Field>
 
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <label className="block text-xs font-medium text-muted uppercase tracking-wide">Тело (markdown)</label>
+            <label className="block text-xs font-medium text-muted uppercase tracking-wide">Saturs (markdown)</label>
             <div className="ml-auto flex rounded-md border border-line overflow-hidden text-xs">
-              <button onClick={() => setTab("edit")} className={`px-3 py-1 ${tab === "edit" ? "bg-accent text-white" : "bg-card"}`}>Редактор</button>
-              <button onClick={() => setTab("preview")} className={`px-3 py-1 ${tab === "preview" ? "bg-accent text-white" : "bg-card"}`}>Превью</button>
+              <button onClick={() => setTab("edit")} className={`px-3 py-1 ${tab === "edit" ? "bg-accent text-white" : "bg-card"}`}>Redaktors</button>
+              <button onClick={() => setTab("preview")} className={`px-3 py-1 ${tab === "preview" ? "bg-accent text-white" : "bg-card"}`}>Priekšskatījums</button>
             </div>
           </div>
           {tab === "edit" ? (
             <textarea rows={12} className={inputCls + " font-mono text-xs"} value={form.body_lv ?? ""} onChange={(e) => set("body_lv", e.target.value)} />
           ) : (
             <div className="rounded-md border border-line bg-paper-2 p-4 prose prose-sm max-w-none min-h-[280px]">
-              <ReactMarkdown>{form.body_lv ?? "_Пусто_"}</ReactMarkdown>
+              <ReactMarkdown>{form.body_lv ?? "_Tukšs_"}</ReactMarkdown>
             </div>
           )}
         </div>
 
         <div className="flex justify-end gap-2 pt-2">
-          <button onClick={handleClose} className="rounded-md border border-line px-3 py-2 text-sm">Отмена</button>
-          <button onClick={() => save.mutate(form)} disabled={save.isPending} className="rounded-md bg-accent text-white px-3 py-2 text-sm font-medium disabled:opacity-50">{save.isPending ? "Сохранение…" : "Сохранить"}</button>
+          <button onClick={handleClose} className="rounded-md border border-line px-3 py-2 text-sm">Atcelt</button>
+          <button onClick={() => save.mutate(form)} disabled={save.isPending} className="rounded-md bg-accent text-white px-3 py-2 text-sm font-medium disabled:opacity-50">{save.isPending ? "Saglabā…" : "Saglabāt"}</button>
         </div>
       </div>
     </div>

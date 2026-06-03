@@ -51,7 +51,7 @@ function SortableRow({ id, children }: { id: string; children: (handle: ReactNod
       {...attributes}
       {...listeners}
       className="cursor-grab active:cursor-grabbing text-muted hover:text-ink p-1"
-      aria-label="Перетащить"
+      aria-label="Pārvilkt"
       type="button"
     >
       <GripVertical className="h-4 w-4" />

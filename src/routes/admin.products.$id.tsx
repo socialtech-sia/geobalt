@@ -92,7 +92,7 @@ function ProductEditorPage() {
         ...uploads.map((url, i) => ({ url, is_primary: imgs.length === 0 && i === 0, sort_order: imgs.length + i })),
       ]);
     } catch (e: any) {
-      setError("Ошибка загрузки: " + e.message);
+      setError("Ielādes kļūda: " + e.message);
     } finally {
       setUploading(false);
     }
@@ -103,7 +103,7 @@ function ProductEditorPage() {
 
   const save = async (closeAfter = false) => {
     setError(null);
-    if (!form.name || !form.slug) { setError("Название и slug обязательны"); return; }
+    if (!form.name || !form.slug) { setError("Nosaukums un slug ir obligāti"); return; }
     setSaving(true);
     try {
       let productId = id;
@@ -148,38 +148,38 @@ function ProductEditorPage() {
         <div className="flex items-center gap-3">
           <Link to="/admin/products" className="text-muted hover:text-ink"><ArrowLeft className="h-5 w-5" /></Link>
           <h1 className="font-display text-2xl font-bold text-ink">
-            {isNew ? "Новый продукт" : form.name || "Редактирование"}
+            {isNew ? "Jauns produkts" : form.name || "Rediģēšana"}
           </h1>
         </div>
         <div className="flex gap-2">
           <button onClick={() => save(false)} disabled={saving} className="rounded-md bg-card border border-line text-sm text-ink px-3 py-2 hover:bg-paper disabled:opacity-50">
-            {saving ? "Сохранение…" : "Сохранить"}
+            {saving ? "Saglabā…" : "Saglabāt"}
           </button>
           <button onClick={() => save(true)} disabled={saving} className="rounded-md bg-accent text-white text-sm font-medium px-3 py-2 hover:bg-accent-d disabled:opacity-50">
-            Сохранить и закрыть
+            Saglabāt un aizvērt
           </button>
         </div>
       </div>
 
       {error && <div className="rounded-md bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">{error}</div>}
 
-      <Section title="Основное">
+      <Section title="Pamata">
         <div className="grid grid-cols-2 gap-4">
-          <Field label="Название*"><input className={inputCls} value={form.name} onChange={(e) => handleNameChange(e.target.value)} /></Field>
+          <Field label="Nosaukums*"><input className={inputCls} value={form.name} onChange={(e) => handleNameChange(e.target.value)} /></Field>
           <Field label="Slug*"><input className={inputCls + " font-mono"} value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: slugify(e.target.value) }))} /></Field>
-          <Field label="Бренд">
+          <Field label="Zīmols">
             <select className={inputCls} value={form.brand_id} onChange={(e) => setForm((f) => ({ ...f, brand_id: e.target.value }))}>
               <option value="">—</option>
               {refs?.brands.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
             </select>
           </Field>
-          <Field label="Категория">
+          <Field label="Kategorija">
             <select className={inputCls} value={form.category_id} onChange={(e) => setForm((f) => ({ ...f, category_id: e.target.value }))}>
               <option value="">—</option>
               {refs?.categories.map((c) => <option key={c.id} value={c.id}>{c.name_lv}</option>)}
             </select>
           </Field>
-          <Field label="Отрасли (Industries)" className="col-span-2">
+          <Field label="Nozares (Industries)" className="col-span-2">
             <div className="flex flex-wrap gap-2">
               {INDUSTRIES.map((ind) => {
                 const sel = form.industries.includes(ind);
@@ -197,45 +197,45 @@ function ProductEditorPage() {
               })}
             </div>
           </Field>
-          <Field label="Краткое описание (LV)" className="col-span-2">
+          <Field label="Īss apraksts (LV)" className="col-span-2">
             <textarea className={inputCls} rows={2} value={form.short_desc_lv} onChange={(e) => setForm((f) => ({ ...f, short_desc_lv: e.target.value }))} />
           </Field>
-          <Field label="Полное описание (LV, markdown)" className="col-span-2">
+          <Field label="Pilns apraksts (LV, markdown)" className="col-span-2">
             <textarea className={inputCls + " font-mono text-xs"} rows={6} value={form.full_desc_lv} onChange={(e) => setForm((f) => ({ ...f, full_desc_lv: e.target.value }))} />
           </Field>
         </div>
       </Section>
 
-      <Section title="Иконочные характеристики (4 карточки)">
+      <Section title="Ikonu raksturlielumi (4 kartītes)">
         <div className="grid grid-cols-4 gap-4">
-          <Field label="Точность"><input className={inputCls + " font-mono"} value={form.accuracy} onChange={(e) => setForm((f) => ({ ...f, accuracy: e.target.value }))} placeholder="8 mm + 1 ppm" /></Field>
-          <Field label="IP-класс"><input className={inputCls + " font-mono"} value={form.ip_class} onChange={(e) => setForm((f) => ({ ...f, ip_class: e.target.value }))} placeholder="IP68" /></Field>
-          <Field label="Батарея (ч)"><input className={inputCls + " font-mono"} value={form.battery_h} onChange={(e) => setForm((f) => ({ ...f, battery_h: e.target.value }))} placeholder="22 h" /></Field>
-          <Field label="Вес (kg)"><input className={inputCls + " font-mono"} value={form.weight_kg} onChange={(e) => setForm((f) => ({ ...f, weight_kg: e.target.value }))} placeholder="1.2 kg" /></Field>
+          <Field label="Precizitāte"><input className={inputCls + " font-mono"} value={form.accuracy} onChange={(e) => setForm((f) => ({ ...f, accuracy: e.target.value }))} placeholder="8 mm + 1 ppm" /></Field>
+          <Field label="IP klase"><input className={inputCls + " font-mono"} value={form.ip_class} onChange={(e) => setForm((f) => ({ ...f, ip_class: e.target.value }))} placeholder="IP68" /></Field>
+          <Field label="Baterija (h)"><input className={inputCls + " font-mono"} value={form.battery_h} onChange={(e) => setForm((f) => ({ ...f, battery_h: e.target.value }))} placeholder="22 h" /></Field>
+          <Field label="Svars (kg)"><input className={inputCls + " font-mono"} value={form.weight_kg} onChange={(e) => setForm((f) => ({ ...f, weight_kg: e.target.value }))} placeholder="1.2 kg" /></Field>
         </div>
       </Section>
 
-      <Section title="Полная таблица характеристик">
+      <Section title="Pilna raksturlielumu tabula">
         <div className="space-y-2">
           {specs.map((s, idx) => (
             <div key={idx} className="flex gap-2 items-center">
-              <input className={inputCls + " flex-1"} placeholder="Параметр (LV)" value={s.label_lv}
+              <input className={inputCls + " flex-1"} placeholder="Parametrs (LV)" value={s.label_lv}
                 onChange={(e) => setSpecs((arr) => arr.map((x, i) => i === idx ? { ...x, label_lv: e.target.value } : x))} />
-              <input className={inputCls + " flex-1 font-mono"} placeholder="Значение" value={s.value}
+              <input className={inputCls + " flex-1 font-mono"} placeholder="Vērtība" value={s.value}
                 onChange={(e) => setSpecs((arr) => arr.map((x, i) => i === idx ? { ...x, value: e.target.value } : x))} />
               <button onClick={() => setSpecs((arr) => arr.filter((_, i) => i !== idx))} className="p-2 text-muted hover:text-red-600"><X className="h-4 w-4" /></button>
             </div>
           ))}
           <button onClick={() => setSpecs((arr) => [...arr, { label_lv: "", value: "", sort_order: arr.length }])}
-            className="text-sm text-accent hover:underline flex items-center gap-1"><Plus className="h-4 w-4" /> Добавить</button>
+            className="text-sm text-accent hover:underline flex items-center gap-1"><Plus className="h-4 w-4" /> Pievienot</button>
         </div>
       </Section>
 
-      <Section title="Фотографии">
+      <Section title="Fotogrāfijas">
         <label className="block">
           <div className="border-2 border-dashed border-line rounded-lg p-6 text-center hover:bg-paper-2 cursor-pointer">
             <Upload className="h-6 w-6 mx-auto text-muted mb-2" />
-            <span className="text-sm text-muted">{uploading ? "Загрузка…" : "Кликни или перетяни фото"}</span>
+            <span className="text-sm text-muted">{uploading ? "Ielādē…" : "Spied vai velc foto"}</span>
             <input type="file" accept="image/*" multiple className="hidden" onChange={(e) => handleFiles(e.target.files)} />
           </div>
         </label>
@@ -245,10 +245,10 @@ function ProductEditorPage() {
               <div key={idx} className="relative group">
                 <img src={img.url} alt="" className="w-full h-32 object-cover rounded border border-line" />
                 {img.is_primary && (
-                  <span className="absolute top-1 left-1 bg-accent text-white text-xs px-1.5 py-0.5 rounded">Главное</span>
+                  <span className="absolute top-1 left-1 bg-accent text-white text-xs px-1.5 py-0.5 rounded">Galvenais</span>
                 )}
                 <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition">
-                  <button onClick={() => setPrimary(idx)} className="bg-white/90 p-1 rounded hover:bg-white" title="Сделать главным">
+                  <button onClick={() => setPrimary(idx)} className="bg-white/90 p-1 rounded hover:bg-white" title="Iestatīt kā galveno">
                     <Star className={`h-3.5 w-3.5 ${img.is_primary ? "fill-accent text-accent" : ""}`} />
                   </button>
                   <button onClick={() => removeImage(idx)} className="bg-white/90 p-1 rounded hover:bg-red-50 text-red-600">
@@ -261,14 +261,14 @@ function ProductEditorPage() {
         )}
       </Section>
 
-      <Section title="Флаги">
+      <Section title="Karodziņi">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <Toggle label="Активен (показывать на сайте)" value={form.is_active} onChange={(v) => setForm((f) => ({ ...f, is_active: v }))} />
-          <Toggle label="Популярный (на главной)" value={form.is_popular} onChange={(v) => setForm((f) => ({ ...f, is_popular: v }))} />
-          <Toggle label="Доступен к продаже" value={form.is_available_sale} onChange={(v) => setForm((f) => ({ ...f, is_available_sale: v }))} />
-          <Toggle label="Доступен в аренду" value={form.is_available_rent} onChange={(v) => setForm((f) => ({ ...f, is_available_rent: v }))} />
+          <Toggle label="Aktīvs (rādīt vietnē)" value={form.is_active} onChange={(v) => setForm((f) => ({ ...f, is_active: v }))} />
+          <Toggle label="Populārs (sākumlapā)" value={form.is_popular} onChange={(v) => setForm((f) => ({ ...f, is_popular: v }))} />
+          <Toggle label="Pieejams pārdošanai" value={form.is_available_sale} onChange={(v) => setForm((f) => ({ ...f, is_available_sale: v }))} />
+          <Toggle label="Pieejams nomai" value={form.is_available_rent} onChange={(v) => setForm((f) => ({ ...f, is_available_rent: v }))} />
         </div>
-        <Field label="Порядок сортировки" className="mt-3 max-w-xs">
+        <Field label="Šķirošanas secība" className="mt-3 max-w-xs">
           <input type="number" className={inputCls + " font-mono"} value={form.sort_order} onChange={(e) => setForm((f) => ({ ...f, sort_order: parseInt(e.target.value) || 0 }))} />
         </Field>
       </Section>

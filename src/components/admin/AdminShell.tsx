@@ -24,14 +24,14 @@ interface NavItem {
 }
 
 const NAV: NavItem[] = [
-  { label: "Дашборд", to: "/admin", icon: LayoutDashboard },
-  { label: "Продукты", to: "/admin/products", icon: Package },
-  { label: "Категории", to: "/admin/categories", icon: FolderTree },
-  { label: "Бренды", to: "/admin/brands", icon: Tag },
-  { label: "Отзывы", to: "/admin/reviews", icon: MessageSquare },
-  { label: "Блог", to: "/admin/blog", icon: FileText },
-  { label: "Заявки", to: "/admin/leads", icon: Inbox },
-  { label: "Настройки", to: "/admin/settings", icon: SettingsIcon, adminOnly: true },
+  { label: "Vadības panelis", to: "/admin", icon: LayoutDashboard },
+  { label: "Produkti", to: "/admin/products", icon: Package },
+  { label: "Kategorijas", to: "/admin/categories", icon: FolderTree },
+  { label: "Zīmoli", to: "/admin/brands", icon: Tag },
+  { label: "Atsauksmes", to: "/admin/reviews", icon: MessageSquare },
+  { label: "Blogs", to: "/admin/blog", icon: FileText },
+  { label: "Pieprasījumi", to: "/admin/leads", icon: Inbox },
+  { label: "Iestatījumi", to: "/admin/settings", icon: SettingsIcon, adminOnly: true },
 ];
 
 export function AdminShell({ children }: { children: ReactNode }) {
@@ -64,7 +64,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   if (auth.loading || !auth.isStaff) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-paper">
-        <p className="text-muted text-sm">Загрузка…</p>
+        <p className="text-muted text-sm">Ielādē…</p>
       </div>
     );
   }
@@ -121,13 +121,13 @@ export function AdminShell({ children }: { children: ReactNode }) {
             rel="noreferrer"
             className="text-sm text-muted hover:text-ink flex items-center gap-1.5"
           >
-            <ExternalLink className="h-3.5 w-3.5" /> Открыть сайт
+            <ExternalLink className="h-3.5 w-3.5" /> Atvērt vietni
           </a>
           <button
             onClick={handleLogout}
             className="text-sm text-muted hover:text-ink flex items-center gap-1.5"
           >
-            <LogOut className="h-3.5 w-3.5" /> Выйти
+            <LogOut className="h-3.5 w-3.5" /> Iziet
           </button>
         </header>
         <main className="flex-1 overflow-auto p-6">{children}</main>

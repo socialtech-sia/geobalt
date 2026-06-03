@@ -35,7 +35,7 @@ function ReviewsPage() {
   const reorder = async (next: Review[]) => {
     qc.setQueryData(["admin", "reviews"], next);
     await persistOrder("reviews", next.map((r) => r.id), supabase);
-    toast.success("Порядок сохранён");
+    toast.success("Secība saglabāta");
     qc.invalidateQueries({ queryKey: ["admin", "reviews"] });
   };
 
@@ -47,22 +47,22 @@ function ReviewsPage() {
   const remove = async (r: Review) => {
     const { error } = await supabase.from("reviews").delete().eq("id", r.id);
     if (error) return toast.error(error.message);
-    toast.success("Отзыв удалён");
+    toast.success("Atsauksme dzēsta");
     qc.invalidateQueries({ queryKey: ["admin", "reviews"] });
   };
 
   return (
     <div className="space-y-6 max-w-5xl">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold text-ink">Отзывы</h1>
+        <h1 className="font-display text-2xl font-bold text-ink">Atsauksmes</h1>
         <button onClick={() => setEditing({ author_name: "", quote_lv: "", is_active: true, sort_order: reviews.length })} className="rounded-md bg-accent text-white text-sm font-medium px-3 py-2 hover:bg-accent-d flex items-center gap-1.5">
-          <Plus className="h-4 w-4" /> Новый отзыв
+          <Plus className="h-4 w-4" /> Jauna atsauksme
         </button>
       </div>
 
       <div className="rounded-xl bg-card border border-line overflow-hidden">
         <div className="grid grid-cols-[40px_1fr_1fr_1fr_80px_60px_120px] gap-2 px-3 py-2 bg-paper-2 text-xs font-mono uppercase text-muted">
-          <span></span><span>Автор</span><span>Компания</span><span>Нозаре</span><span>Актив.</span><span>Поряд.</span><span>Действия</span>
+          <span></span><span>Autors</span><span>Uzņēmums</span><span>Nozare</span><span>Akt.</span><span>Sec.</span><span>Darbības</span>
         </div>
         <SortableList
           items={reviews}
@@ -86,7 +86,7 @@ function ReviewsPage() {
             </div>
           )}
         />
-        {reviews.length === 0 && <div className="p-8 text-center text-muted text-sm">Пусто</div>}
+        {reviews.length === 0 && <div className="p-8 text-center text-muted text-sm">Tukšs</div>}
       </div>
 
       {editing && <ReviewEditor initial={editing} onClose={() => setEditing(null)} />}
@@ -101,7 +101,7 @@ function ReviewEditor({ initial, onClose }: { initial: Partial<Review>; onClose:
 
   const save = useMutation({
     mutationFn: async (data: Partial<Review>) => {
-      if (!data.author_name || !data.quote_lv) throw new Error("Заполните автора и цитату");
+      if (!data.author_name || !data.quote_lv) throw new Error("Aizpildiet autoru un citātu");
       const payload = {
         author_name: data.author_name,
         author_role_lv: data.author_role_lv ?? null,
@@ -120,7 +120,7 @@ function ReviewEditor({ initial, onClose }: { initial: Partial<Review>; onClose:
       }
     },
     onSuccess: () => {
-      toast.success("Сохранено");
+      toast.success("Saglabāts");
       qc.invalidateQueries({ queryKey: ["admin", "reviews"] });
       onClose();
     },
@@ -128,7 +128,7 @@ function ReviewEditor({ initial, onClose }: { initial: Partial<Review>; onClose:
   });
 
   const handleClose = () => {
-    if (dirty && !confirm("Есть несохранённые изменения. Закрыть?")) return;
+    if (dirty && !confirm("Ir nesaglabātas izmaiņas. Aizvērt?")) return;
     onClose();
   };
 
@@ -139,37 +139,37 @@ function ReviewEditor({ initial, onClose }: { initial: Partial<Review>; onClose:
       <div className="bg-card rounded-xl border border-line max-w-4xl w-full p-6 grid md:grid-cols-2 gap-6" onClick={(e) => e.stopPropagation()}>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="font-display text-xl font-bold">{initial.id ? "Редактировать отзыв" : "Новый отзыв"}</h2>
+            <h2 className="font-display text-xl font-bold">{initial.id ? "Rediģēt atsauksmi" : "Jauna atsauksme"}</h2>
             <button onClick={handleClose}><X className="h-5 w-5 text-muted" /></button>
           </div>
-          <Field label="Автор"><input className={inputCls} value={form.author_name ?? ""} onChange={(e) => set("author_name", e.target.value)} /></Field>
-          <Field label="Роль (LV)"><input className={inputCls} value={form.author_role_lv ?? ""} onChange={(e) => set("author_role_lv", e.target.value)} /></Field>
-          <Field label="Компания"><input className={inputCls} value={form.company ?? ""} onChange={(e) => set("company", e.target.value)} /></Field>
-          <Field label="Нозаре"><input className={inputCls} value={form.industry ?? ""} onChange={(e) => set("industry", e.target.value)} /></Field>
-          <Field label="Цитата (LV)"><textarea rows={5} className={inputCls} value={form.quote_lv ?? ""} onChange={(e) => set("quote_lv", e.target.value)} /></Field>
+          <Field label="Autors"><input className={inputCls} value={form.author_name ?? ""} onChange={(e) => set("author_name", e.target.value)} /></Field>
+          <Field label="Loma (LV)"><input className={inputCls} value={form.author_role_lv ?? ""} onChange={(e) => set("author_role_lv", e.target.value)} /></Field>
+          <Field label="Uzņēmums"><input className={inputCls} value={form.company ?? ""} onChange={(e) => set("company", e.target.value)} /></Field>
+          <Field label="Nozare"><input className={inputCls} value={form.industry ?? ""} onChange={(e) => set("industry", e.target.value)} /></Field>
+          <Field label="Citāts (LV)"><textarea rows={5} className={inputCls} value={form.quote_lv ?? ""} onChange={(e) => set("quote_lv", e.target.value)} /></Field>
           <div className="grid grid-cols-2 gap-3">
             <label className="flex items-center gap-2 text-sm border border-line rounded-md px-3 py-2">
-              <input type="checkbox" checked={form.is_active ?? true} onChange={(e) => set("is_active", e.target.checked)} className="accent-accent" /> Активен
+              <input type="checkbox" checked={form.is_active ?? true} onChange={(e) => set("is_active", e.target.checked)} className="accent-accent" /> Aktīvs
             </label>
-            <Field label="Порядок"><input type="number" className={inputCls} value={form.sort_order ?? 0} onChange={(e) => set("sort_order", parseInt(e.target.value) || 0)} /></Field>
+            <Field label="Secība"><input type="number" className={inputCls} value={form.sort_order ?? 0} onChange={(e) => set("sort_order", parseInt(e.target.value) || 0)} /></Field>
           </div>
           <div className="flex justify-end gap-2 pt-2">
-            <button onClick={handleClose} className="rounded-md border border-line px-3 py-2 text-sm">Отмена</button>
-            <button onClick={() => save.mutate(form)} disabled={save.isPending} className="rounded-md bg-accent text-white px-3 py-2 text-sm font-medium disabled:opacity-50">{save.isPending ? "Сохранение…" : "Сохранить"}</button>
+            <button onClick={handleClose} className="rounded-md border border-line px-3 py-2 text-sm">Atcelt</button>
+            <button onClick={() => save.mutate(form)} disabled={save.isPending} className="rounded-md bg-accent text-white px-3 py-2 text-sm font-medium disabled:opacity-50">{save.isPending ? "Saglabā…" : "Saglabāt"}</button>
           </div>
         </div>
 
         <div>
-          <div className="text-xs font-mono uppercase text-muted mb-2">Превью на сайте</div>
+          <div className="text-xs font-mono uppercase text-muted mb-2">Priekšskatījums vietnē</div>
           <div className="bg-card border border-line rounded-2xl p-6 relative">
             <Quote className="absolute top-4 right-4 text-accent/15" size={48} />
-            <p className="italic text-base leading-relaxed text-ink relative z-10">"{form.quote_lv || "Цитата отзыва…"}"</p>
+            <p className="italic text-base leading-relaxed text-ink relative z-10">"{form.quote_lv || "Atsauksmes citāts…"}"</p>
             <div className="flex items-center gap-3 mt-5">
               <div className="w-10 h-10 rounded-full bg-green text-white flex items-center justify-center font-display font-bold text-sm">
                 {(form.author_name ?? "?").split(" ").map((s) => s[0]).slice(0, 2).join("")}
               </div>
               <div>
-                <div className="font-display font-bold text-ink text-sm">{form.author_name || "Автор"}</div>
+                <div className="font-display font-bold text-ink text-sm">{form.author_name || "Autors"}</div>
                 <div className="text-xs text-muted font-mono">{form.author_role_lv || "—"} · {form.company || "—"}</div>
               </div>
             </div>

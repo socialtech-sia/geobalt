@@ -28,7 +28,7 @@ function AdminLoginPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
-      setError("Неверный email или пароль");
+      setError("Nepareizs e-pasts vai parole");
       return;
     }
     const adminUser = await getAdminUser();
@@ -37,7 +37,7 @@ function AdminLoginPage() {
       return;
     }
     await supabase.auth.signOut();
-    setError("У этой учётной записи нет доступа к админке");
+    setError("Šim kontam nav piekļuves administrēšanas panelim");
   };
 
   return (
@@ -46,7 +46,7 @@ function AdminLoginPage() {
         <h1 className="font-display text-2xl font-black text-ink">
           geobalt<span className="text-accent">.</span>admin
         </h1>
-        <p className="mt-1 text-sm text-muted">Вход в панель управления</p>
+        <p className="mt-1 text-sm text-muted">Pieslēgšanās vadības panelim</p>
         <form onSubmit={onSubmit} className="mt-6 space-y-3">
           <div>
             <label className="block text-xs font-medium text-muted uppercase tracking-wide mb-1">
@@ -62,7 +62,7 @@ function AdminLoginPage() {
           </div>
           <div>
             <label className="block text-xs font-medium text-muted uppercase tracking-wide mb-1">
-              Пароль
+              Parole
             </label>
             <input
               type="password"
@@ -82,11 +82,11 @@ function AdminLoginPage() {
             disabled={loading}
             className="w-full rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white hover:bg-accent-d disabled:opacity-50"
           >
-            {loading ? "Вход…" : "Войти"}
+            {loading ? "Pieslēdzas…" : "Pieslēgties"}
           </button>
         </form>
         <p className="mt-6 text-center text-xs text-muted">
-          Для создания учётной записи обратитесь к администратору
+          Lai izveidotu kontu, sazinieties ar administratoru
         </p>
       </div>
     </div>
