@@ -5,7 +5,43 @@ import { useRequestModal } from "@/components/request-modal-context";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 
 export const Route = createFileRoute("/kontakti")({
-  head: () => ({ meta: [{ title: "Kontakti | geobalt.lv" }] }),
+  head: () => {
+    const title = "Kontakti | geobalt.lv";
+    const description = "Sazinies ar geobalt.lv — adrese, tālrunis, e-pasts un darba laiks. Atbildam vienas darba dienas laikā.";
+    const url = "https://geobalt.lv/kontakti";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            name: "geobalt.lv",
+            url: "https://geobalt.lv",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Brīvības iela 100",
+              addressLocality: "Rīga",
+              postalCode: "LV-1011",
+              addressCountry: "LV",
+            },
+            telephone: "+371 20 000 000",
+            email: "info@geobalt.lv",
+            openingHours: "Mo-Fr 09:00-18:00",
+          }),
+        },
+      ],
+    };
+  },
   component: ContactsPage,
 });
 
