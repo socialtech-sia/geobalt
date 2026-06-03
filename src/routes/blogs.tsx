@@ -13,7 +13,7 @@ function BlogsPage() {
   const { data: posts = [] } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const { data } = await supabase.from("blog_posts").select("*").order("published_at", { ascending: false });
+      const { data } = await supabase.from("blog_posts").select("*").eq("status", "published").lte("published_at", new Date().toISOString()).order("published_at", { ascending: false });
       return (data as BlogPost[]) ?? [];
     },
   });
