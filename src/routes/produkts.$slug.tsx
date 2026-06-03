@@ -72,13 +72,14 @@ function ProductPage() {
     },
   });
 
+  const { data: relatedImages = {} } = useProductImages(related.map((p) => p.id));
+
   const [tab, setTab] = useState<"desc" | "specs" | "set">("desc");
   const [activeImg, setActiveImg] = useState(0);
 
   if (isLoading) return <div className="max-w-7xl mx-auto px-6 py-20 text-muted">Ielādē…</div>;
   if (!product) throw notFound();
 
-  const { data: relatedImages = {} } = useProductImages(related.map((p) => p.id));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 pb-32 lg:pb-10">
