@@ -15,7 +15,7 @@ function BlogPostPage() {
   const { data: post, isLoading } = useQuery({
     queryKey: ["blog", slug],
     queryFn: async () => {
-      const { data } = await supabase.from("blog_posts").select("*").eq("slug", slug).maybeSingle();
+      const { data } = await supabase.from("blog_posts").select("*").eq("slug", slug).eq("status", "published").maybeSingle();
       return (data as BlogPost) ?? null;
     },
   });
