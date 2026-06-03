@@ -61,9 +61,9 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/40 font-mono-spec">
           <span>{lv.footer.copyright}</span>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-white">{lv.footer.privacy}</a>
-            <a href="#" className="hover:text-white">{lv.footer.cookies}</a>
-            <a href="#" className="hover:text-white">{lv.footer.gdpr}</a>
+            <Link to="/privatuma-politika" className="hover:text-white">{lv.footer.privacy}</Link>
+            <Link to="/sikdatnes" className="hover:text-white">{lv.footer.cookies}</Link>
+            <Link to="/gdpr" className="hover:text-white">{lv.footer.gdpr}</Link>
           </div>
         </div>
       </div>

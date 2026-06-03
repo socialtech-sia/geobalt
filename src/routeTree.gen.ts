@@ -10,9 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZimoliRouteImport } from './routes/zimoli'
+import { Route as SikdatnesRouteImport } from './routes/sikdatnes'
 import { Route as ServissRouteImport } from './routes/serviss'
+import { Route as PrivatumaPolitikaRouteImport } from './routes/privatuma-politika'
 import { Route as ParMumsRouteImport } from './routes/par-mums'
 import { Route as KontaktiRouteImport } from './routes/kontakti'
+import { Route as GdprRouteImport } from './routes/gdpr'
 import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProduktsSlugRouteImport } from './routes/produkts.$slug'
@@ -24,9 +27,19 @@ const ZimoliRoute = ZimoliRouteImport.update({
   path: '/zimoli',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SikdatnesRoute = SikdatnesRouteImport.update({
+  id: '/sikdatnes',
+  path: '/sikdatnes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServissRoute = ServissRouteImport.update({
   id: '/serviss',
   path: '/serviss',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivatumaPolitikaRoute = PrivatumaPolitikaRouteImport.update({
+  id: '/privatuma-politika',
+  path: '/privatuma-politika',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ParMumsRoute = ParMumsRouteImport.update({
@@ -37,6 +50,11 @@ const ParMumsRoute = ParMumsRouteImport.update({
 const KontaktiRoute = KontaktiRouteImport.update({
   id: '/kontakti',
   path: '/kontakti',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GdprRoute = GdprRouteImport.update({
+  id: '/gdpr',
+  path: '/gdpr',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogsRoute = BlogsRouteImport.update({
@@ -68,9 +86,12 @@ const BlogsSlugRoute = BlogsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
+  '/gdpr': typeof GdprRoute
   '/kontakti': typeof KontaktiRoute
   '/par-mums': typeof ParMumsRoute
+  '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
+  '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
@@ -79,9 +100,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
+  '/gdpr': typeof GdprRoute
   '/kontakti': typeof KontaktiRoute
   '/par-mums': typeof ParMumsRoute
+  '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
+  '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
@@ -91,9 +115,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blogs': typeof BlogsRouteWithChildren
+  '/gdpr': typeof GdprRoute
   '/kontakti': typeof KontaktiRoute
   '/par-mums': typeof ParMumsRoute
+  '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
+  '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
@@ -104,9 +131,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/blogs'
+    | '/gdpr'
     | '/kontakti'
     | '/par-mums'
+    | '/privatuma-politika'
     | '/serviss'
+    | '/sikdatnes'
     | '/zimoli'
     | '/blogs/$slug'
     | '/katalogs/$category'
@@ -115,9 +145,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/blogs'
+    | '/gdpr'
     | '/kontakti'
     | '/par-mums'
+    | '/privatuma-politika'
     | '/serviss'
+    | '/sikdatnes'
     | '/zimoli'
     | '/blogs/$slug'
     | '/katalogs/$category'
@@ -126,9 +159,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/blogs'
+    | '/gdpr'
     | '/kontakti'
     | '/par-mums'
+    | '/privatuma-politika'
     | '/serviss'
+    | '/sikdatnes'
     | '/zimoli'
     | '/blogs/$slug'
     | '/katalogs/$category'
@@ -138,9 +174,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogsRoute: typeof BlogsRouteWithChildren
+  GdprRoute: typeof GdprRoute
   KontaktiRoute: typeof KontaktiRoute
   ParMumsRoute: typeof ParMumsRoute
+  PrivatumaPolitikaRoute: typeof PrivatumaPolitikaRoute
   ServissRoute: typeof ServissRoute
+  SikdatnesRoute: typeof SikdatnesRoute
   ZimoliRoute: typeof ZimoliRoute
   KatalogsCategoryRoute: typeof KatalogsCategoryRoute
   ProduktsSlugRoute: typeof ProduktsSlugRoute
@@ -155,11 +194,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ZimoliRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sikdatnes': {
+      id: '/sikdatnes'
+      path: '/sikdatnes'
+      fullPath: '/sikdatnes'
+      preLoaderRoute: typeof SikdatnesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/serviss': {
       id: '/serviss'
       path: '/serviss'
       fullPath: '/serviss'
       preLoaderRoute: typeof ServissRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privatuma-politika': {
+      id: '/privatuma-politika'
+      path: '/privatuma-politika'
+      fullPath: '/privatuma-politika'
+      preLoaderRoute: typeof PrivatumaPolitikaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/par-mums': {
@@ -174,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/kontakti'
       fullPath: '/kontakti'
       preLoaderRoute: typeof KontaktiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gdpr': {
+      id: '/gdpr'
+      path: '/gdpr'
+      fullPath: '/gdpr'
+      preLoaderRoute: typeof GdprRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blogs': {
@@ -227,9 +287,12 @@ const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogsRoute: BlogsRouteWithChildren,
+  GdprRoute: GdprRoute,
   KontaktiRoute: KontaktiRoute,
   ParMumsRoute: ParMumsRoute,
+  PrivatumaPolitikaRoute: PrivatumaPolitikaRoute,
   ServissRoute: ServissRoute,
+  SikdatnesRoute: SikdatnesRoute,
   ZimoliRoute: ZimoliRoute,
   KatalogsCategoryRoute: KatalogsCategoryRoute,
   ProduktsSlugRoute: ProduktsSlugRoute,
@@ -237,3 +300,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
