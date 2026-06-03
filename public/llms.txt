@@ -1,0 +1,27 @@
+# geobalt.lv
+
+> Profesionāli ģeodēzijas risinājumi mērniekiem, ceļabūves un mežsaimniecības uzņēmumiem Baltijā — GNSS uztvērēji, nivelieri, lāzeri, lauka datori. Pārdošana, noma un serviss.
+
+## Pages
+
+- [Sākums](/): Pārskats un populārākais aprīkojums.
+- [Par mums](/par-mums): Uzņēmuma stāsts un pieredze.
+- [Serviss](/serviss): Tehniskais serviss, kalibrēšana, aizvietošanas tehnika.
+- [Zīmoli](/zimoli): Oficiālā partneru saraksts.
+- [Kontakti](/kontakti): Adrese, tālrunis, darba laiks.
+- [Blogs](/blogs): Raksti par ģeodēzijas tehnoloģijām.
+
+## Katalogs
+
+- [GNSS uztvērēji](/katalogs/gnss): RTK GNSS uztvērēji mērniecībai, ceļabūvei un mežsaimniecībai.
+- [Lauka datori](/katalogs/lauka-datori): Izturīgi lauka datori un tabletes.
+- [Nivelieri & lāzeri](/katalogs/nivelieri-lazeri): Optiskie un lāzera nivelieri.
+- [Marķēšana](/katalogs/markesana): Mietiņi, stieņi, marķēšanas piederumi.
+- [Aksesuāri](/katalogs/aksesuari): Antenas, baterijas, kabeļi un piederumi.
+- [Noma](/katalogs/noma): Iznomāšanai pieejamais aprīkojums.
+
+## Optional
+
+- [Privātuma politika](/privatuma-politika)
+- [Sīkdatnes](/sikdatnes)
+- [GDPR](/gdpr)
