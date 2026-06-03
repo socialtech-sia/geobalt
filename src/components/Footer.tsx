@@ -48,7 +48,7 @@ export function Footer() {
             <li><Link to="/par-mums" className="hover:text-accent">{lv.nav.about}</Link></li>
             <li><Link to="/serviss" className="hover:text-accent">{lv.nav.service}</Link></li>
             <li><Link to="/zimoli" className="hover:text-accent">{lv.nav.brands}</Link></li>
-            <li><Link to="/blogs" className="hover:text-accent">{lv.nav.blog}</Link></li>
+            {showBlog && <li><Link to="/blogs" className="hover:text-accent">{lv.nav.blog}</Link></li>}
             <li><Link to="/kontakti" className="hover:text-accent">{lv.nav.contacts}</Link></li>
           </ul>
         </div>
