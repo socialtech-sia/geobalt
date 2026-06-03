@@ -52,7 +52,7 @@ function CatalogPage() {
   const { data: imagesMap = {} } = useProductImages(products.map((p) => p.id));
 
   // filters
-  const [industries, setIndustries] = useState<string[]>([]);
+  const [industries, setIndustries] = useState<string[]>(initialIndustry ? [initialIndustry] : []);
   const [brandIds, setBrandIds] = useState<string[]>([]);
   const [ip, setIp] = useState<string[]>([]);
   const [avail, setAvail] = useState<string[]>([]);
