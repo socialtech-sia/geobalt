@@ -10,7 +10,7 @@ export const Route = createFileRoute("/sikdatnes")({
       { property: "og:type", content: "website" },
     ],
     links: [
-      { rel: "canonical", href: "/sikdatnes" },
+      { rel: "canonical", href: "https://geobalt.lv/sikdatnes" },
     ],
   }),
   component: CookiesPage,

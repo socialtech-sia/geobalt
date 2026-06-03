@@ -10,7 +10,7 @@ export const Route = createFileRoute("/gdpr")({
       { property: "og:type", content: "website" },
     ],
     links: [
-      { rel: "canonical", href: "/gdpr" },
+      { rel: "canonical", href: "https://geobalt.lv/gdpr" },
     ],
   }),
   component: GDPRPage,
