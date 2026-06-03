@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZimoliRouteImport } from './routes/zimoli'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SikdatnesRouteImport } from './routes/sikdatnes'
 import { Route as ServissRouteImport } from './routes/serviss'
 import { Route as PrivatumaPolitikaRouteImport } from './routes/privatuma-politika'
@@ -39,6 +40,11 @@ import { Route as AdminProductsIdRouteImport } from './routes/admin.products.$id
 const ZimoliRoute = ZimoliRouteImport.update({
   id: '/zimoli',
   path: '/zimoli',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SikdatnesRoute = SikdatnesRouteImport.update({
@@ -176,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/zimoli': typeof ZimoliRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
@@ -203,6 +210,7 @@ export interface FileRoutesByTo {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/zimoli': typeof ZimoliRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
@@ -260,6 +269,7 @@ export interface FileRouteTypes {
     | '/privatuma-politika'
     | '/serviss'
     | '/sikdatnes'
+    | '/sitemap.xml'
     | '/zimoli'
     | '/admin/blog'
     | '/admin/brands'
@@ -287,6 +297,7 @@ export interface FileRouteTypes {
     | '/privatuma-politika'
     | '/serviss'
     | '/sikdatnes'
+    | '/sitemap.xml'
     | '/admin/blog'
     | '/admin/brands'
     | '/admin/categories'
@@ -313,6 +324,7 @@ export interface FileRouteTypes {
     | '/privatuma-politika'
     | '/serviss'
     | '/sikdatnes'
+    | '/sitemap.xml'
     | '/zimoli'
     | '/admin/blog'
     | '/admin/brands'
@@ -342,6 +354,7 @@ export interface RootRouteChildren {
   PrivatumaPolitikaRoute: typeof PrivatumaPolitikaRoute
   ServissRoute: typeof ServissRoute
   SikdatnesRoute: typeof SikdatnesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ZimoliRoute: typeof ZimoliRouteWithChildren
   BlogsSlugRoute: typeof BlogsSlugRoute
   KatalogsCategoryRoute: typeof KatalogsCategoryRoute
@@ -356,6 +369,13 @@ declare module '@tanstack/react-router' {
       path: '/zimoli'
       fullPath: '/zimoli'
       preLoaderRoute: typeof ZimoliRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sikdatnes': {
@@ -598,6 +618,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivatumaPolitikaRoute: PrivatumaPolitikaRoute,
   ServissRoute: ServissRoute,
   SikdatnesRoute: SikdatnesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ZimoliRoute: ZimoliRouteWithChildren,
   BlogsSlugRoute: BlogsSlugRoute,
   KatalogsCategoryRoute: KatalogsCategoryRoute,

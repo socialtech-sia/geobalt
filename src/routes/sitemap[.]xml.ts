@@ -34,7 +34,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         ];
 
         const [{ data: products }, { data: brands }, { data: posts }] = await Promise.all([
-          supabase.from("products").select("slug, updated_at").eq("is_active", true),
+          supabase.from("products").select("slug").eq("is_active", true),
           supabase.from("brands").select("slug"),
           supabase.from("blog_posts").select("slug, published_at").eq("status", "published"),
         ]);
@@ -42,7 +42,6 @@ export const Route = createFileRoute("/sitemap.xml")({
         const dynamicEntries: SitemapEntry[] = [
           ...(products ?? []).map((p) => ({
             path: `/produkts/${p.slug}`,
-            lastmod: p.updated_at?.slice(0, 10),
             changefreq: "monthly" as const,
             priority: "0.7",
           })),
