@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useAdminAuth } from "@/lib/admin/auth";
+import { getAdminUser, useAdminAuth } from "@/lib/admin/auth";
 
 export const Route = createFileRoute("/admin/login")({
   component: AdminLoginPage,
@@ -31,6 +31,13 @@ function AdminLoginPage() {
       setError("Неверный email или пароль");
       return;
     }
+    const adminUser = await getAdminUser();
+    if (adminUser?.role === "admin" || adminUser?.role === "editor") {
+      navigate({ to: "/admin", replace: true });
+      return;
+    }
+    await supabase.auth.signOut();
+    setError("У этой учётной записи нет доступа к админке");
   };
 
   return (
