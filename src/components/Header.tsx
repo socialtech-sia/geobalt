@@ -60,6 +60,8 @@ export function Header() {
             <div className="relative">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
               <input
+                type="search"
+                aria-label={lv.nav.search}
                 placeholder={lv.nav.search}
                 className="bg-white/5 border border-white/10 rounded-md pl-8 pr-3 py-1.5 text-sm text-white placeholder:text-white/40 w-44 focus:outline-none focus:border-accent"
               />
