@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lv } from "@/lib/i18n";
 import { ProductCard } from "@/components/ProductCard";
 import { useRequestModal } from "@/components/request-modal-context";
+import { useProductImages } from "@/lib/useProductImages";
 import type { Product } from "@/lib/types";
 
 export const Route = createFileRoute("/produkts/$slug")({
