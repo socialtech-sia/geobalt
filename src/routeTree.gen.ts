@@ -16,9 +16,9 @@ import { Route as PrivatumaPolitikaRouteImport } from './routes/privatuma-politi
 import { Route as ParMumsRouteImport } from './routes/par-mums'
 import { Route as KontaktiRouteImport } from './routes/kontakti'
 import { Route as GdprRouteImport } from './routes/gdpr'
-import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ZimoliSlugRouteImport } from './routes/zimoli.$slug'
 import { Route as ProduktsSlugRouteImport } from './routes/produkts.$slug'
@@ -70,11 +70,6 @@ const GdprRoute = GdprRouteImport.update({
   path: '/gdpr',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogsRoute = BlogsRouteImport.update({
-  id: '/blogs',
-  path: '/blogs',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -83,6 +78,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogsIndexRoute = BlogsIndexRouteImport.update({
+  id: '/blogs/',
+  path: '/blogs/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -106,9 +106,9 @@ const KatalogsCategoryRoute = KatalogsCategoryRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogsSlugRoute = BlogsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogsRoute,
+  id: '/blogs/$slug',
+  path: '/blogs/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
@@ -164,7 +164,6 @@ const AdminProductsIdRoute = AdminProductsIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
-  '/blogs': typeof BlogsRouteWithChildren
   '/gdpr': typeof GdprRoute
   '/kontakti': typeof KontaktiRoute
   '/par-mums': typeof ParMumsRoute
@@ -185,12 +184,12 @@ export interface FileRoutesByFullPath {
   '/produkts/$slug': typeof ProduktsSlugRoute
   '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/blogs/': typeof BlogsIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/': typeof AdminProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/blogs': typeof BlogsRouteWithChildren
   '/gdpr': typeof GdprRoute
   '/kontakti': typeof KontaktiRoute
   '/par-mums': typeof ParMumsRoute
@@ -210,6 +209,7 @@ export interface FileRoutesByTo {
   '/produkts/$slug': typeof ProduktsSlugRoute
   '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/blogs': typeof BlogsIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products': typeof AdminProductsIndexRoute
 }
@@ -217,7 +217,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
-  '/blogs': typeof BlogsRouteWithChildren
   '/gdpr': typeof GdprRoute
   '/kontakti': typeof KontaktiRoute
   '/par-mums': typeof ParMumsRoute
@@ -238,6 +237,7 @@ export interface FileRoutesById {
   '/produkts/$slug': typeof ProduktsSlugRoute
   '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/blogs/': typeof BlogsIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/': typeof AdminProductsIndexRoute
 }
@@ -246,7 +246,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
-    | '/blogs'
     | '/gdpr'
     | '/kontakti'
     | '/par-mums'
@@ -267,12 +266,12 @@ export interface FileRouteTypes {
     | '/produkts/$slug'
     | '/zimoli/$slug'
     | '/admin/'
+    | '/blogs/'
     | '/admin/products/$id'
     | '/admin/products/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/blogs'
     | '/gdpr'
     | '/kontakti'
     | '/par-mums'
@@ -292,13 +291,13 @@ export interface FileRouteTypes {
     | '/produkts/$slug'
     | '/zimoli/$slug'
     | '/admin'
+    | '/blogs'
     | '/admin/products/$id'
     | '/admin/products'
   id:
     | '__root__'
     | '/'
     | '/admin'
-    | '/blogs'
     | '/gdpr'
     | '/kontakti'
     | '/par-mums'
@@ -319,6 +318,7 @@ export interface FileRouteTypes {
     | '/produkts/$slug'
     | '/zimoli/$slug'
     | '/admin/'
+    | '/blogs/'
     | '/admin/products/$id'
     | '/admin/products/'
   fileRoutesById: FileRoutesById
@@ -326,7 +326,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
-  BlogsRoute: typeof BlogsRouteWithChildren
   GdprRoute: typeof GdprRoute
   KontaktiRoute: typeof KontaktiRoute
   ParMumsRoute: typeof ParMumsRoute
@@ -334,8 +333,10 @@ export interface RootRouteChildren {
   ServissRoute: typeof ServissRoute
   SikdatnesRoute: typeof SikdatnesRoute
   ZimoliRoute: typeof ZimoliRouteWithChildren
+  BlogsSlugRoute: typeof BlogsSlugRoute
   KatalogsCategoryRoute: typeof KatalogsCategoryRoute
   ProduktsSlugRoute: typeof ProduktsSlugRoute
+  BlogsIndexRoute: typeof BlogsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -389,13 +390,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GdprRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blogs': {
-      id: '/blogs'
-      path: '/blogs'
-      fullPath: '/blogs'
-      preLoaderRoute: typeof BlogsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -408,6 +402,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blogs/': {
+      id: '/blogs/'
+      path: '/blogs'
+      fullPath: '/blogs/'
+      preLoaderRoute: typeof BlogsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -440,10 +441,10 @@ declare module '@tanstack/react-router' {
     }
     '/blogs/$slug': {
       id: '/blogs/$slug'
-      path: '/$slug'
+      path: '/blogs/$slug'
       fullPath: '/blogs/$slug'
       preLoaderRoute: typeof BlogsSlugRouteImport
-      parentRoute: typeof BlogsRoute
+      parentRoute: typeof rootRouteImport
     }
     '/admin/settings': {
       id: '/admin/settings'
@@ -558,16 +559,6 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
-interface BlogsRouteChildren {
-  BlogsSlugRoute: typeof BlogsSlugRoute
-}
-
-const BlogsRouteChildren: BlogsRouteChildren = {
-  BlogsSlugRoute: BlogsSlugRoute,
-}
-
-const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
-
 interface ZimoliRouteChildren {
   ZimoliSlugRoute: typeof ZimoliSlugRoute
 }
@@ -582,7 +573,6 @@ const ZimoliRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
-  BlogsRoute: BlogsRouteWithChildren,
   GdprRoute: GdprRoute,
   KontaktiRoute: KontaktiRoute,
   ParMumsRoute: ParMumsRoute,
@@ -590,9 +580,21 @@ const rootRouteChildren: RootRouteChildren = {
   ServissRoute: ServissRoute,
   SikdatnesRoute: SikdatnesRoute,
   ZimoliRoute: ZimoliRouteWithChildren,
+  BlogsSlugRoute: BlogsSlugRoute,
   KatalogsCategoryRoute: KatalogsCategoryRoute,
   ProduktsSlugRoute: ProduktsSlugRoute,
+  BlogsIndexRoute: BlogsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
