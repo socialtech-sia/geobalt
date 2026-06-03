@@ -174,6 +174,7 @@ function Popular() {
       return (data as Product[]) ?? [];
     },
   });
+  const { data: images = {} } = useProductImages(products.map((p) => p.id));
 
   return (
     <section className="bg-paper-2 py-20">
@@ -188,7 +189,7 @@ function Popular() {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((p) => <ProductCard key={p.id} product={p} />)}
+          {products.map((p) => <ProductCard key={p.id} product={p} imageUrl={images[p.id]} />)}
         </div>
       </div>
     </section>
