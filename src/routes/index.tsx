@@ -234,7 +234,7 @@ function Reviews() {
   const { data: reviews = [] } = useQuery({
     queryKey: ["reviews"],
     queryFn: async () => {
-      const { data } = await supabase.from("reviews").select("*").order("sort_order");
+      const { data } = await supabase.from("reviews").select("*").eq("is_active", true).order("sort_order");
       return (data as Review[]) ?? [];
     },
   });
