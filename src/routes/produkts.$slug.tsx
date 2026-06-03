@@ -197,7 +197,7 @@ function ProductPage() {
         <div className="mt-16">
           <h2 className="text-2xl md:text-3xl mb-6">{lv.product.related}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {related.map((p) => <ProductCard key={p.id} product={p} />)}
+            {related.map((p) => <ProductCard key={p.id} product={p} imageUrl={relatedImages[p.id]} />)}
           </div>
         </div>
       )}
