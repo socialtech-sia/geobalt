@@ -82,7 +82,7 @@
     font-weight: 800;
   }
 
-  /* Тонкий синий скроллбар */
+  /* Тонкий скроллбар в цвет шапки */
   ::-webkit-scrollbar {
     width: 2px;
     height: 2px;
@@ -91,15 +91,15 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #2563EB;
+    background: var(--ink);
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #1D4ED8;
+    background: var(--ink-soft);
   }
   html {
     scrollbar-width: thin;
-    scrollbar-color: #2563EB transparent;
+    scrollbar-color: var(--ink) transparent;
   }
 }
 
