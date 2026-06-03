@@ -138,7 +138,7 @@ function CatalogPage() {
             <div className="bg-card border border-dashed border-line rounded-2xl p-12 text-center text-muted">{lv.catalog.empty}</div>
           ) : (
             <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
+              {filtered.map((p) => <ProductCard key={p.id} product={p} imageUrl={imagesMap[p.id]} />)}
             </div>
           )}
         </div>
