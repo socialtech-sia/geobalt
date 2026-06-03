@@ -148,7 +148,10 @@ function ProductPage() {
               {gallery.slice(0, 8).map((img, i) => (
                 <button
                   key={i}
+                  type="button"
                   onClick={() => setActiveImg(i)}
+                  aria-label={`Rādīt ${product.name} attēlu ${i + 1}`}
+                  aria-pressed={i === activeImg}
                   className={`aspect-square bg-card border rounded-lg overflow-hidden ${i === activeImg ? "border-accent" : "border-line"}`}
                 >
                   <img src={img.url} alt="" className="w-full h-full object-cover" />
