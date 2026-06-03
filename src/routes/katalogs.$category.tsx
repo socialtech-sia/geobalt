@@ -8,6 +8,10 @@ import { useProductImages } from "@/lib/useProductImages";
 import type { Product, Category, Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/katalogs/$category")({
+  validateSearch: (s: Record<string, unknown>) => ({
+    industry: typeof s.industry === "string" ? s.industry : undefined,
+    sub: typeof s.sub === "string" ? s.sub : undefined,
+  }),
   head: ({ params }) => ({
     meta: [
       { title: `${CATEGORY_NAV.find((c) => c.slug === params.category)?.label ?? "Katalogs"} | geobalt.lv` },
