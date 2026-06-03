@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lv, CATEGORY_NAV } from "@/lib/i18n";
 import { ProductCard } from "@/components/ProductCard";
+import { useProductImages } from "@/lib/useProductImages";
 import type { Product, Category, Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/katalogs/$category")({
