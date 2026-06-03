@@ -115,6 +115,7 @@ export function Header() {
               <Link to="/serviss" onClick={() => setOpenMobile(false)} className="block px-3 py-2 text-white/70 text-sm">{lv.nav.service}</Link>
               <Link to="/zimoli" onClick={() => setOpenMobile(false)} className="block px-3 py-2 text-white/70 text-sm">{lv.nav.brands}</Link>
               <Link to="/kontakti" onClick={() => setOpenMobile(false)} className="block px-3 py-2 text-white/70 text-sm">{lv.nav.contacts}</Link>
+              <Link to="/blogs" onClick={() => setOpenMobile(false)} className="block px-3 py-2 text-white/70 text-sm">Blogs</Link>
             </div>
           </div>
         )}
