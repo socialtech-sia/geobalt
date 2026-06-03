@@ -113,20 +113,26 @@ function Hero() {
         </div>
 
         <div className="hidden lg:flex justify-center">
-          <div className="relative w-[420px] h-[420px] rounded-full bg-gradient-to-br from-accent/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+          <div className="relative w-[460px] h-[460px] rounded-[32px] bg-gradient-to-br from-accent/15 via-white/5 to-white/[0.02] border border-white/10 flex items-center justify-center overflow-hidden shadow-2xl">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(232,93,58,0.18),transparent_55%)]" />
             {slide && imagesMap[slide.id] ? (
               <img
                 src={imagesMap[slide.id]}
                 alt={slide.name}
-                className="w-[340px] h-[340px] object-contain drop-shadow-2xl"
+                className="relative z-[1] max-w-[82%] max-h-[82%] object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.55)]"
               />
             ) : (
-              <div className="w-72 h-72 rounded-full bg-paper/5 backdrop-blur border border-white/10 flex items-center justify-center">
-                <Crosshair size={140} strokeWidth={1} className="text-accent" />
+              <div className="relative z-[1] w-64 h-64 rounded-2xl bg-white/[0.03] backdrop-blur border border-white/10 flex items-center justify-center">
+                <Crosshair size={130} strokeWidth={1} className="text-accent" />
               </div>
             )}
-            <span className="absolute top-6 right-6 pill bg-accent text-white z-10">{slide?.brands?.name ?? "Satlab"}</span>
+            <span className="absolute top-5 right-5 pill bg-accent text-white z-10">{slide?.brands?.name ?? "Satlab"}</span>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
         </div>
       </div>
     </section>
