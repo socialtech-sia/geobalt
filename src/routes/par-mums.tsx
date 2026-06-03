@@ -3,7 +3,22 @@ import { lv } from "@/lib/i18n";
 import { useRequestModal } from "@/components/request-modal-context";
 
 export const Route = createFileRoute("/par-mums")({
-  head: () => ({ meta: [{ title: "Par mums | geobalt.lv" }] }),
+  head: () => {
+    const title = "Par mums | geobalt.lv";
+    const description = "geobalt.lv — profesionāla ģeodēzijas aprīkojuma piegādātājs Baltijā kopš 2010. gada. 15+ gadu pieredze, 500+ klientu, 6 oficiāli zīmoli.";
+    const url = "https://geobalt.lv/par-mums";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: AboutPage,
 });
 
