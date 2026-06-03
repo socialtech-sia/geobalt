@@ -51,6 +51,7 @@ function Hero() {
       return (data as Product[]) ?? [];
     },
   });
+  const { data: imagesMap = {} } = useProductImages(slides.map((s) => s.id));
 
   const [i, setI] = useState(0);
   useEffect(() => {
@@ -112,11 +113,19 @@ function Hero() {
         </div>
 
         <div className="hidden lg:flex justify-center">
-          <div className="relative w-[420px] h-[420px] rounded-full bg-gradient-to-br from-accent/10 to-white/5 border border-white/10 flex items-center justify-center">
-            <div className="w-72 h-72 rounded-full bg-paper/5 backdrop-blur border border-white/10 flex items-center justify-center">
-              <Crosshair size={140} strokeWidth={1} className="text-accent" />
-            </div>
-            <span className="absolute top-6 right-6 pill bg-accent text-white">{slide?.brands?.name ?? "Satlab"}</span>
+          <div className="relative w-[420px] h-[420px] rounded-full bg-gradient-to-br from-accent/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+            {slide && imagesMap[slide.id] ? (
+              <img
+                src={imagesMap[slide.id]}
+                alt={slide.name}
+                className="w-[340px] h-[340px] object-contain drop-shadow-2xl"
+              />
+            ) : (
+              <div className="w-72 h-72 rounded-full bg-paper/5 backdrop-blur border border-white/10 flex items-center justify-center">
+                <Crosshair size={140} strokeWidth={1} className="text-accent" />
+              </div>
+            )}
+            <span className="absolute top-6 right-6 pill bg-accent text-white z-10">{slide?.brands?.name ?? "Satlab"}</span>
           </div>
         </div>
       </div>
