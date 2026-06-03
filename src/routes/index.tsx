@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { ArrowRight, Crosshair, Shield, BatteryFull, Scale, Quote } from "lucide-react";
+import { ArrowRight, Crosshair, Shield, Quote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lv } from "@/lib/i18n";
-import { TopoBg } from "@/components/TopoBg";
 import { ProductCard } from "@/components/ProductCard";
 import { useRequestModal } from "@/components/request-modal-context";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 import type { Product, Review, BlogPost, Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/")({
