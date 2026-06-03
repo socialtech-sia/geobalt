@@ -21,7 +21,13 @@ export function useSiteSettings() {
   return useQuery({
     queryKey: ["settings"],
     queryFn: async () => {
-      const { data } = await supabase.from("settings").select("*").eq("id", 1).single();
+      const { data } = await supabase
+        .from("settings")
+        .select(
+          "contact_phone, contact_email, contact_address_lv, working_hours_lv, promo_enabled, promo_image_url, promo_title_lv, promo_text_lv, promo_cta_url, show_blog, show_reviews, show_rent"
+        )
+        .eq("id", 1)
+        .single();
       return data as SiteSettings | null;
     },
     staleTime: 60_000,
