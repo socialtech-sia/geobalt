@@ -6,6 +6,8 @@ import { useSiteSettings } from "@/lib/useSiteSettings";
 
 export function Header() {
   const [openMobile, setOpenMobile] = useState(false);
+  const { data: settings } = useSiteSettings();
+  const phone = settings?.contact_phone ?? lv.footer.phone;
 
   return (
     <header className="sticky top-0 z-50 bg-ink text-white border-b border-white/5">
