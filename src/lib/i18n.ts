@@ -123,10 +123,31 @@ export const lv = {
   breadcrumbs: { home: "Sākums" },
 };
 
-export const CATEGORY_NAV = [
-  { slug: "gnss", label: "GNSS uztvērēji" },
+export type CategoryNavItem = {
+  slug: string;
+  label: string;
+  subs?: { slug: string; label: string; hint?: string }[];
+};
+
+export const CATEGORY_NAV: CategoryNavItem[] = [
+  {
+    slug: "gnss",
+    label: "GNSS uztvērēji",
+    subs: [
+      { slug: "mernieciba", label: "Mērniecībai", hint: "SL900, S950A" },
+      { slug: "celabuve", label: "Ceļabūvei", hint: "SL900, S900A" },
+      { slug: "mezsaimnieciba", label: "Mežsaimniecībai", hint: "SL7, EYR, S599" },
+    ],
+  },
   { slug: "lauka-datori", label: "Lauka datori" },
-  { slug: "nivelieri-lazeri", label: "Nivelieri & lāzeri" },
+  {
+    slug: "nivelieri-lazeri",
+    label: "Nivelieri & lāzeri",
+    subs: [
+      { slug: "optiskie", label: "Optiskie", hint: "Titan TAL32, manuālie" },
+      { slug: "lazeru", label: "Lāzeru", hint: "Rotācijas, līniju, punkta" },
+    ],
+  },
   { slug: "markesana", label: "Marķēšana" },
   { slug: "aksesuari", label: "Aksesuāri" },
   { slug: "noma", label: "Noma" },
