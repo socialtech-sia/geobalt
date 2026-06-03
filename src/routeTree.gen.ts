@@ -17,10 +17,13 @@ import { Route as ParMumsRouteImport } from './routes/par-mums'
 import { Route as KontaktiRouteImport } from './routes/kontakti'
 import { Route as GdprRouteImport } from './routes/gdpr'
 import { Route as BlogsRouteImport } from './routes/blogs'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProduktsSlugRouteImport } from './routes/produkts.$slug'
 import { Route as KatalogsCategoryRouteImport } from './routes/katalogs.$category'
 import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 
 const ZimoliRoute = ZimoliRouteImport.update({
   id: '/zimoli',
@@ -62,10 +65,20 @@ const BlogsRoute = BlogsRouteImport.update({
   path: '/blogs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const ProduktsSlugRoute = ProduktsSlugRouteImport.update({
   id: '/produkts/$slug',
@@ -82,9 +95,15 @@ const BlogsSlugRoute = BlogsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogsRoute,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/blogs': typeof BlogsRouteWithChildren
   '/gdpr': typeof GdprRoute
   '/kontakti': typeof KontaktiRoute
@@ -93,9 +112,11 @@ export interface FileRoutesByFullPath {
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
   '/produkts/$slug': typeof ProduktsSlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,13 +128,16 @@ export interface FileRoutesByTo {
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
   '/produkts/$slug': typeof ProduktsSlugRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/blogs': typeof BlogsRouteWithChildren
   '/gdpr': typeof GdprRoute
   '/kontakti': typeof KontaktiRoute
@@ -122,14 +146,17 @@ export interface FileRoutesById {
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
   '/produkts/$slug': typeof ProduktsSlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/blogs'
     | '/gdpr'
     | '/kontakti'
@@ -138,9 +165,11 @@ export interface FileRouteTypes {
     | '/serviss'
     | '/sikdatnes'
     | '/zimoli'
+    | '/admin/login'
     | '/blogs/$slug'
     | '/katalogs/$category'
     | '/produkts/$slug'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -152,12 +181,15 @@ export interface FileRouteTypes {
     | '/serviss'
     | '/sikdatnes'
     | '/zimoli'
+    | '/admin/login'
     | '/blogs/$slug'
     | '/katalogs/$category'
     | '/produkts/$slug'
+    | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/blogs'
     | '/gdpr'
     | '/kontakti'
@@ -166,13 +198,16 @@ export interface FileRouteTypes {
     | '/serviss'
     | '/sikdatnes'
     | '/zimoli'
+    | '/admin/login'
     | '/blogs/$slug'
     | '/katalogs/$category'
     | '/produkts/$slug'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   BlogsRoute: typeof BlogsRouteWithChildren
   GdprRoute: typeof GdprRoute
   KontaktiRoute: typeof KontaktiRoute
@@ -243,12 +278,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/produkts/$slug': {
       id: '/produkts/$slug'
@@ -271,8 +320,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsSlugRouteImport
       parentRoute: typeof BlogsRoute
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminLoginRoute: AdminLoginRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface BlogsRouteChildren {
   BlogsSlugRoute: typeof BlogsSlugRoute
@@ -286,6 +354,7 @@ const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   BlogsRoute: BlogsRouteWithChildren,
   GdprRoute: GdprRoute,
   KontaktiRoute: KontaktiRoute,
@@ -300,3 +369,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
