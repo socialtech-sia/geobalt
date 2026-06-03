@@ -198,21 +198,30 @@ function Popular() {
 /* ----------------------------- PROMO ----------------------------- */
 
 function Promo() {
+  const { data: settings } = useSiteSettings();
+  if (!settings?.promo_enabled) return null;
+  const title = settings.promo_title_lv || lv.home.promo.title;
+  const text = settings.promo_text_lv || lv.home.promo.desc;
+  const cta = settings.promo_cta_url || "/katalogs/gnss";
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="rounded-2xl bg-amber-soft border border-line p-8 md:p-10 grid md:grid-cols-3 gap-6 items-center">
-        <div className="aspect-video bg-ink/5 rounded-xl flex items-center justify-center">
-          <Crosshair size={64} className="text-accent/60" strokeWidth={1.2} />
+        <div className="aspect-video bg-ink/5 rounded-xl flex items-center justify-center overflow-hidden">
+          {settings.promo_image_url ? (
+            <img src={settings.promo_image_url} alt="" className="w-full h-full object-cover" />
+          ) : (
+            <Crosshair size={64} className="text-accent/60" strokeWidth={1.2} />
+          )}
         </div>
         <div className="md:col-span-1">
           <div className="kicker mb-2">{lv.home.promo.kicker}</div>
-          <h3 className="text-2xl md:text-3xl">{lv.home.promo.title}</h3>
-          <p className="text-muted mt-3 text-sm">{lv.home.promo.desc}</p>
+          <h3 className="text-2xl md:text-3xl">{title}</h3>
+          <p className="text-muted mt-3 text-sm">{text}</p>
         </div>
         <div className="md:text-right">
-          <Link to="/katalogs/$category" params={{ category: "gnss" }} className="btn-accent">
+          <a href={cta} className="btn-accent">
             {lv.cta.learnMore} <ArrowRight size={16} />
-          </Link>
+          </a>
         </div>
       </div>
     </section>
