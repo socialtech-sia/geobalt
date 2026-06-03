@@ -53,7 +53,8 @@ export function Header() {
                 )}
               </div>
             ))}
-          <Link to="/blogs" className="px-3 py-2 text-[13.5px] text-white/80 hover:text-accent transition-colors font-medium">Blogs</Link>
+            <Link to="/blogs" className="px-3 py-2 text-[13.5px] text-white/80 hover:text-accent transition-colors font-medium">Blogs</Link>
+          </nav>
 
           <div className="hidden md:flex items-center gap-3">
             <div className="relative">
