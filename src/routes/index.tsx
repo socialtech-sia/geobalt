@@ -43,7 +43,7 @@ function Hero() {
       const { data } = await supabase
         .from("products")
         .select("*, brands(name,slug), categories(name_lv,slug)")
-        .eq("is_popular", true)
+        .eq("is_popular", true).eq("is_active", true)
         .order("sort_order")
         .limit(5);
       return (data as Product[]) ?? [];
@@ -167,7 +167,7 @@ function Popular() {
       const { data } = await supabase
         .from("products")
         .select("*, brands(name,slug), categories(name_lv,slug)")
-        .eq("is_popular", true)
+        .eq("is_popular", true).eq("is_active", true)
         .order("sort_order")
         .limit(4);
       return (data as Product[]) ?? [];

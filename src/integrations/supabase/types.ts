@@ -104,6 +104,41 @@ export type Database = {
         }
         Relationships: []
       }
+      lead_notes: {
+        Row: {
+          author_id: string | null
+          author_name: string | null
+          created_at: string
+          id: string
+          lead_id: string
+          note: string
+        }
+        Insert: {
+          author_id?: string | null
+          author_name?: string | null
+          created_at?: string
+          id?: string
+          lead_id: string
+          note: string
+        }
+        Update: {
+          author_id?: string | null
+          author_name?: string | null
+          created_at?: string
+          id?: string
+          lead_id?: string
+          note?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_notes_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           company: string | null
@@ -232,6 +267,7 @@ export type Database = {
           id: string
           industries: string[]
           ip_class: string | null
+          is_active: boolean
           is_available_rent: boolean
           is_available_sale: boolean
           is_popular: boolean
@@ -251,6 +287,7 @@ export type Database = {
           id?: string
           industries?: string[]
           ip_class?: string | null
+          is_active?: boolean
           is_available_rent?: boolean
           is_available_sale?: boolean
           is_popular?: boolean
@@ -270,6 +307,7 @@ export type Database = {
           id?: string
           industries?: string[]
           ip_class?: string | null
+          is_active?: boolean
           is_available_rent?: boolean
           is_available_sale?: boolean
           is_popular?: boolean
@@ -295,6 +333,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+        }
+        Relationships: []
       }
       reviews: {
         Row: {
@@ -326,15 +385,100 @@ export type Database = {
         }
         Relationships: []
       }
+      settings: {
+        Row: {
+          contact_address_lv: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          id: number
+          notification_emails: string[]
+          promo_cta_url: string | null
+          promo_enabled: boolean
+          promo_image_url: string | null
+          promo_text_lv: string | null
+          promo_title_lv: string | null
+          send_lead_autoreply: boolean
+          show_blog: boolean
+          show_rent: boolean
+          show_reviews: boolean
+          updated_at: string
+          working_hours_lv: string | null
+        }
+        Insert: {
+          contact_address_lv?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          id?: number
+          notification_emails?: string[]
+          promo_cta_url?: string | null
+          promo_enabled?: boolean
+          promo_image_url?: string | null
+          promo_text_lv?: string | null
+          promo_title_lv?: string | null
+          send_lead_autoreply?: boolean
+          show_blog?: boolean
+          show_rent?: boolean
+          show_reviews?: boolean
+          updated_at?: string
+          working_hours_lv?: string | null
+        }
+        Update: {
+          contact_address_lv?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          id?: number
+          notification_emails?: string[]
+          promo_cta_url?: string | null
+          promo_enabled?: boolean
+          promo_image_url?: string | null
+          promo_text_lv?: string | null
+          promo_title_lv?: string | null
+          send_lead_autoreply?: boolean
+          show_blog?: boolean
+          show_rent?: boolean
+          show_reviews?: boolean
+          updated_at?: string
+          working_hours_lv?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "editor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -461,6 +605,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "editor"],
+    },
   },
 } as const

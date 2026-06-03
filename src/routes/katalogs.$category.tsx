@@ -42,7 +42,7 @@ function CatalogPage() {
       let q = supabase.from("products").select("*, brands(name,slug), categories(name_lv,slug)");
       if (category === "noma") q = q.eq("is_available_rent", true);
       else if (cat?.id) q = q.eq("category_id", cat.id);
-      const { data } = await q.order("sort_order");
+      const { data } = await q.eq("is_active", true).order("sort_order");
       return (data as Product[]) ?? [];
     },
   });
