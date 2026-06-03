@@ -28,7 +28,7 @@ function ProductPage() {
       const { data } = await supabase
         .from("products")
         .select("*, brands(name,slug), categories(name_lv,slug)")
-        .eq("slug", slug)
+        .eq("slug", slug).eq("is_active", true)
         .maybeSingle();
       return (data as Product) ?? null;
     },
@@ -50,7 +50,7 @@ function ProductPage() {
       const { data } = await supabase
         .from("products")
         .select("*, brands(name,slug), categories(name_lv,slug)")
-        .eq("category_id", product!.category_id!)
+        .eq("category_id", product!.category_id!).eq("is_active", true)
         .neq("id", product!.id)
         .limit(4);
       return (data as Product[]) ?? [];
