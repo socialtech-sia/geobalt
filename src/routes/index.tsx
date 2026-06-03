@@ -296,7 +296,7 @@ function Brands() {
         <div className="kicker text-center mb-8 block">{lv.home.brandsHeading}</div>
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
           {brands.map((b) => (
-            <Link key={b.id} to="/zimoli" className="font-display font-extrabold text-2xl text-muted hover:text-ink transition-colors tracking-tight">
+            <Link key={b.id} to="/zimoli/$slug" params={{ slug: b.slug }} className="font-display font-extrabold text-2xl text-muted hover:text-ink transition-colors tracking-tight">
               {b.name}
             </Link>
           ))}
