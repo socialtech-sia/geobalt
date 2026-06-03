@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Search, Phone } from "lucide-react";
 import { CATEGORY_NAV, lv } from "@/lib/i18n";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 
 export function Header() {
   const [openMobile, setOpenMobile] = useState(false);
