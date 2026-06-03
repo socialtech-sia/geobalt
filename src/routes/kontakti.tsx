@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { lv } from "@/lib/i18n";
 import { useRequestModal } from "@/components/request-modal-context";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 
 export const Route = createFileRoute("/kontakti")({
   head: () => ({ meta: [{ title: "Kontakti | geobalt.lv" }] }),
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/kontakti")({
 
 function ContactsPage() {
   const { openModal } = useRequestModal();
+  const { data: s } = useSiteSettings();
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
       <div className="kicker mb-3">Kontakti</div>
@@ -17,10 +19,10 @@ function ContactsPage() {
 
       <div className="grid lg:grid-cols-2 gap-12">
         <div className="space-y-5">
-          <Row Icon={MapPin} label="Adrese" value={lv.footer.address} />
-          <Row Icon={Phone} label="Tālrunis" value={lv.footer.phone} mono />
-          <Row Icon={Mail} label="E-pasts" value={lv.footer.email} />
-          <Row Icon={Clock} label="Darba laiks" value="P-Pk 9:00 – 18:00" />
+          <Row Icon={MapPin} label="Adrese" value={s?.contact_address_lv ?? lv.footer.address} />
+          <Row Icon={Phone} label="Tālrunis" value={s?.contact_phone ?? lv.footer.phone} mono />
+          <Row Icon={Mail} label="E-pasts" value={s?.contact_email ?? lv.footer.email} />
+          <Row Icon={Clock} label="Darba laiks" value={s?.working_hours_lv ?? "P-Pk 9:00 – 18:00"} />
           <div className="aspect-video bg-paper-2 border border-line rounded-2xl flex items-center justify-center text-muted">
             <MapPin size={48} className="opacity-30" />
           </div>

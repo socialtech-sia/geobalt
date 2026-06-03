@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { ArrowRight, Crosshair, Shield, BatteryFull, Scale, Quote } from "lucide-react";
+import { ArrowRight, Crosshair, Shield, Quote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lv } from "@/lib/i18n";
-import { TopoBg } from "@/components/TopoBg";
 import { ProductCard } from "@/components/ProductCard";
 import { useRequestModal } from "@/components/request-modal-context";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 import type { Product, Review, BlogPost, Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/")({
@@ -20,15 +20,16 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const { data: settings } = useSiteSettings();
   return (
     <>
       <Hero />
       <Industries />
       <Popular />
       <Promo />
-      <Reviews />
+      {(settings?.show_reviews ?? true) && <Reviews />}
       <Brands />
-      <BlogPreview />
+      {(settings?.show_blog ?? true) && <BlogPreview />}
     </>
   );
 }
@@ -197,21 +198,30 @@ function Popular() {
 /* ----------------------------- PROMO ----------------------------- */
 
 function Promo() {
+  const { data: settings } = useSiteSettings();
+  if (!settings?.promo_enabled) return null;
+  const title = settings.promo_title_lv || lv.home.promo.title;
+  const text = settings.promo_text_lv || lv.home.promo.desc;
+  const cta = settings.promo_cta_url || "/katalogs/gnss";
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="rounded-2xl bg-amber-soft border border-line p-8 md:p-10 grid md:grid-cols-3 gap-6 items-center">
-        <div className="aspect-video bg-ink/5 rounded-xl flex items-center justify-center">
-          <Crosshair size={64} className="text-accent/60" strokeWidth={1.2} />
+        <div className="aspect-video bg-ink/5 rounded-xl flex items-center justify-center overflow-hidden">
+          {settings.promo_image_url ? (
+            <img src={settings.promo_image_url} alt="" className="w-full h-full object-cover" />
+          ) : (
+            <Crosshair size={64} className="text-accent/60" strokeWidth={1.2} />
+          )}
         </div>
         <div className="md:col-span-1">
           <div className="kicker mb-2">{lv.home.promo.kicker}</div>
-          <h3 className="text-2xl md:text-3xl">{lv.home.promo.title}</h3>
-          <p className="text-muted mt-3 text-sm">{lv.home.promo.desc}</p>
+          <h3 className="text-2xl md:text-3xl">{title}</h3>
+          <p className="text-muted mt-3 text-sm">{text}</p>
         </div>
         <div className="md:text-right">
-          <Link to="/katalogs/$category" params={{ category: "gnss" }} className="btn-accent">
+          <a href={cta} className="btn-accent">
             {lv.cta.learnMore} <ArrowRight size={16} />
-          </Link>
+          </a>
         </div>
       </div>
     </section>
@@ -224,7 +234,7 @@ function Reviews() {
   const { data: reviews = [] } = useQuery({
     queryKey: ["reviews"],
     queryFn: async () => {
-      const { data } = await supabase.from("reviews").select("*").order("sort_order");
+      const { data } = await supabase.from("reviews").select("*").eq("is_active", true).order("sort_order");
       return (data as Review[]) ?? [];
     },
   });
@@ -288,7 +298,7 @@ function BlogPreview() {
   const { data: posts = [] } = useQuery({
     queryKey: ["blog-preview"],
     queryFn: async () => {
-      const { data } = await supabase.from("blog_posts").select("*").order("published_at", { ascending: false }).limit(3);
+      const { data } = await supabase.from("blog_posts").select("*").eq("status", "published").lte("published_at", new Date().toISOString()).order("published_at", { ascending: false }).limit(3);
       return (data as BlogPost[]) ?? [];
     },
   });

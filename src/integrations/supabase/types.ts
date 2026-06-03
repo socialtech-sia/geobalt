@@ -22,6 +22,7 @@ export type Database = {
           id: string
           published_at: string
           slug: string
+          status: string
           tag_lv: string | null
           title_lv: string
         }
@@ -32,6 +33,7 @@ export type Database = {
           id?: string
           published_at?: string
           slug: string
+          status?: string
           tag_lv?: string | null
           title_lv: string
         }
@@ -42,6 +44,7 @@ export type Database = {
           id?: string
           published_at?: string
           slug?: string
+          status?: string
           tag_lv?: string | null
           title_lv?: string
         }
@@ -362,6 +365,7 @@ export type Database = {
           company: string | null
           id: string
           industry: string | null
+          is_active: boolean
           quote_lv: string
           sort_order: number
         }
@@ -371,6 +375,7 @@ export type Database = {
           company?: string | null
           id?: string
           industry?: string | null
+          is_active?: boolean
           quote_lv: string
           sort_order?: number
         }
@@ -380,6 +385,7 @@ export type Database = {
           company?: string | null
           id?: string
           industry?: string | null
+          is_active?: boolean
           quote_lv?: string
           sort_order?: number
         }

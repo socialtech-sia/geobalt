@@ -1,10 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { CATEGORY_NAV, lv } from "@/lib/i18n";
 import { useRequestModal } from "./request-modal-context";
-import { Mail, MapPin, Phone, Linkedin, Facebook, Instagram } from "lucide-react";
+import { Mail, MapPin, Phone, Clock, Linkedin, Facebook, Instagram } from "lucide-react";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 
 export function Footer() {
   const { openModal } = useRequestModal();
+  const { data: settings } = useSiteSettings();
+  const phone = settings?.contact_phone ?? lv.footer.phone;
+  const email = settings?.contact_email ?? lv.footer.email;
+  const address = settings?.contact_address_lv ?? lv.footer.address;
+  const hours = settings?.working_hours_lv;
+  const showBlog = settings?.show_blog ?? true;
 
   return (
     <footer className="relative topo-bg text-white mt-20">
@@ -41,7 +48,7 @@ export function Footer() {
             <li><Link to="/par-mums" className="hover:text-accent">{lv.nav.about}</Link></li>
             <li><Link to="/serviss" className="hover:text-accent">{lv.nav.service}</Link></li>
             <li><Link to="/zimoli" className="hover:text-accent">{lv.nav.brands}</Link></li>
-            <li><Link to="/blogs" className="hover:text-accent">{lv.nav.blog}</Link></li>
+            {showBlog && <li><Link to="/blogs" className="hover:text-accent">{lv.nav.blog}</Link></li>}
             <li><Link to="/kontakti" className="hover:text-accent">{lv.nav.contacts}</Link></li>
           </ul>
         </div>
@@ -49,9 +56,10 @@ export function Footer() {
         <div>
           <h4 className="text-white font-display font-extrabold text-base mb-4">{lv.footer.contacts}</h4>
           <ul className="space-y-3 text-sm text-white/70">
-            <li className="flex items-start gap-2"><MapPin size={14} className="mt-0.5 text-accent" /> {lv.footer.address}</li>
-            <li className="flex items-center gap-2"><Phone size={14} className="text-accent" /> <span className="font-mono-spec">{lv.footer.phone}</span></li>
-            <li className="flex items-center gap-2"><Mail size={14} className="text-accent" /> {lv.footer.email}</li>
+            <li className="flex items-start gap-2"><MapPin size={14} className="mt-0.5 text-accent" /> {address}</li>
+            <li className="flex items-center gap-2"><Phone size={14} className="text-accent" /> <span className="font-mono-spec">{phone}</span></li>
+            <li className="flex items-center gap-2"><Mail size={14} className="text-accent" /> {email}</li>
+            {hours && <li className="flex items-start gap-2"><Clock size={14} className="mt-0.5 text-accent" /> {hours}</li>}
           </ul>
           <button onClick={() => openModal()} className="btn-accent mt-5 text-sm">{lv.cta.contactUs}</button>
         </div>

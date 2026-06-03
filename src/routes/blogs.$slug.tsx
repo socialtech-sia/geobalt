@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Shield } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { lv } from "@/lib/i18n";
 import type { BlogPost } from "@/lib/types";
@@ -15,7 +16,7 @@ function BlogPostPage() {
   const { data: post, isLoading } = useQuery({
     queryKey: ["blog", slug],
     queryFn: async () => {
-      const { data } = await supabase.from("blog_posts").select("*").eq("slug", slug).maybeSingle();
+      const { data } = await supabase.from("blog_posts").select("*").eq("slug", slug).eq("status", "published").maybeSingle();
       return (data as BlogPost) ?? null;
     },
   });
@@ -32,10 +33,10 @@ function BlogPostPage() {
       <span className="pill bg-paper-2 text-ink mb-4">{post.tag_lv}</span>
       <h1 className="text-4xl md:text-5xl mt-3">{post.title_lv}</h1>
       <p className="text-muted mt-4 text-lg">{post.excerpt_lv}</p>
-      <div className="aspect-[16/9] bg-paper-2 border border-line rounded-2xl flex items-center justify-center my-10">
-        <Shield size={80} strokeWidth={1} className="text-ink/20" />
+      <div className="aspect-[16/9] bg-paper-2 border border-line rounded-2xl flex items-center justify-center my-10 overflow-hidden">
+        {post.cover_url ? <img src={post.cover_url} alt="" className="w-full h-full object-cover" /> : <Shield size={80} strokeWidth={1} className="text-ink/20" />}
       </div>
-      <div className="prose-content text-text leading-relaxed whitespace-pre-wrap">{post.body_lv}</div>
+      <div className="prose prose-lg max-w-none text-text leading-relaxed"><ReactMarkdown>{post.body_lv ?? ""}</ReactMarkdown></div>
     </article>
   );
 }
