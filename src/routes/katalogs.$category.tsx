@@ -72,11 +72,17 @@ function CatalogPage() {
       if (ip.length && !ip.includes(p.ip_class ?? "")) return false;
       if (avail.includes("sale") && !p.is_available_sale) return false;
       if (avail.includes("rent") && !p.is_available_rent) return false;
+      if (initialSub) {
+        const n = p.name.toLowerCase();
+        const isLaser = /lāzer|lazer|laser/.test(n);
+        if (initialSub === "lazeru" && !isLaser) return false;
+        if (initialSub === "optiskie" && isLaser) return false;
+      }
       return true;
     });
     if (sort === "accuracy") list = [...list].sort((a, b) => (a.accuracy ?? "").localeCompare(b.accuracy ?? ""));
     return list;
-  }, [products, industries, brandIds, ip, avail, sort]);
+  }, [products, industries, brandIds, ip, avail, sort, initialSub]);
 
   const toggle = (arr: string[], v: string, set: (x: string[]) => void) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
