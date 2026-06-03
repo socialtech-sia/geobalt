@@ -23,8 +23,9 @@ export const Route = createFileRoute("/katalogs/$category")({
 
 function CatalogPage() {
   const { category } = Route.useParams();
-  const search = Route.useSearch() as { industry?: string };
-  const initialIndustry = search.industry;
+  const search = Route.useSearch() as { industry?: string; sub?: string };
+  const initialIndustry = search.industry ?? (category === "gnss" ? subToIndustry(search.sub) : undefined);
+  const initialSub = category === "nivelieri-lazeri" ? search.sub : undefined;
 
   const { data: cat } = useQuery({
     queryKey: ["category", category],
