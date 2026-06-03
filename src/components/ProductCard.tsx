@@ -16,7 +16,7 @@ function categoryIcon(slug?: string | null) {
   }
 }
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product, imageUrl }: { product: Product; imageUrl?: string | null }) {
   const { openModal } = useRequestModal();
   const Icon = categoryIcon(product.categories?.slug);
 
@@ -26,13 +26,18 @@ export function ProductCard({ product }: { product: Product }) {
       params={{ slug: product.slug }}
       className="product-card flex flex-col overflow-hidden group"
     >
-      {/* image placeholder */}
-      <div className="relative aspect-[4/3] bg-paper-2 flex items-center justify-center border-b border-line">
+      {/* image */}
+      <div className="relative aspect-[4/3] bg-paper-2 flex items-center justify-center border-b border-line overflow-hidden">
         {product.brands?.name && (
-          <span className="absolute top-3 left-3 pill bg-ink text-white text-[10px]">{product.brands.name}</span>
+          <span className="absolute top-3 left-3 pill bg-ink text-white text-[10px] z-10">{product.brands.name}</span>
         )}
-        <Icon size={72} strokeWidth={1.2} className="text-ink/30 group-hover:text-accent transition-colors" />
+        {imageUrl ? (
+          <img src={imageUrl} alt={product.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+        ) : (
+          <Icon size={72} strokeWidth={1.2} className="text-ink/30 group-hover:text-accent transition-colors" />
+        )}
       </div>
+
 
       <div className="p-4 flex-1 flex flex-col">
         <div className="kicker mb-1">{product.categories?.name_lv ?? ""}</div>

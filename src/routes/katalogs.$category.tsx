@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lv, CATEGORY_NAV } from "@/lib/i18n";
 import { ProductCard } from "@/components/ProductCard";
+import { useProductImages } from "@/lib/useProductImages";
 import type { Product, Category, Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/katalogs/$category")({
@@ -46,6 +47,7 @@ function CatalogPage() {
       return (data as Product[]) ?? [];
     },
   });
+  const { data: imagesMap = {} } = useProductImages(products.map((p) => p.id));
 
   // filters
   const [industries, setIndustries] = useState<string[]>([]);
@@ -137,7 +139,7 @@ function CatalogPage() {
             <div className="bg-card border border-dashed border-line rounded-2xl p-12 text-center text-muted">{lv.catalog.empty}</div>
           ) : (
             <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
+              {filtered.map((p) => <ProductCard key={p.id} product={p} imageUrl={imagesMap[p.id]} />)}
             </div>
           )}
         </div>
