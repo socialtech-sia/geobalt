@@ -12,12 +12,23 @@ export const Route = createFileRoute("/katalogs/$category")({
     industry: typeof s.industry === "string" ? s.industry : undefined,
     sub: typeof s.sub === "string" ? s.sub : undefined,
   }),
-  head: ({ params }) => ({
-    meta: [
-      { title: `${CATEGORY_NAV.find((c) => c.slug === params.category)?.label ?? "Katalogs"} | geobalt.lv` },
-      { name: "description", content: "Profesionāls ģeodēzijas aprīkojums — pārdošana un noma." },
-    ],
-  }),
+  head: ({ params }) => {
+    const label = CATEGORY_NAV.find((c) => c.slug === params.category)?.label ?? "Katalogs";
+    const title = `${label} | geobalt.lv`;
+    const description = `${label} — profesionāls ģeodēzijas aprīkojums Baltijā. Pārdošana, noma un serviss vadošajiem zīmoliem.`;
+    const url = `https://geobalt.lv/katalogs/${params.category}`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: CatalogPage,
 });
 

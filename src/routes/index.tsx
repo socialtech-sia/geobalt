@@ -11,12 +11,24 @@ import { useProductImages } from "@/lib/useProductImages";
 import type { Product, Review, BlogPost, Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "geobalt.lv — Ģeodēzijas aprīkojums | GNSS, nivelieri, lauka datori" },
-      { name: "description", content: "Profesionāli ģeodēzijas risinājumi mērniecībai, ceļabūvei un mežsaimniecībai Baltijā." },
-    ],
-  }),
+  head: () => {
+    const title = "geobalt.lv — GNSS, nivelieri, lauka datori";
+    const description = "Profesionāli ģeodēzijas risinājumi mērniecībai, ceļabūvei un mežsaimniecībai Baltijā.";
+    const url = "https://geobalt.lv/";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: HomePage,
 });
 

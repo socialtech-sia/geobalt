@@ -5,7 +5,22 @@ import { supabase } from "@/integrations/supabase/client";
 import type { BlogPost } from "@/lib/types";
 
 export const Route = createFileRoute("/blogs/")({
-  head: () => ({ meta: [{ title: "Blogs | geobalt.lv" }] }),
+  head: () => {
+    const title = "Blogs | geobalt.lv";
+    const description = "Profesionāli raksti par ģeodēzijas tehnoloģijām, iekārtu apskatiem un praktiskiem padomiem mērniekiem.";
+    const url = "https://geobalt.lv/blogs";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: BlogsPage,
 });
 

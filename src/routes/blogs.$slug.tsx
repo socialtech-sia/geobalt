@@ -10,11 +10,40 @@ import type { BlogPost } from "@/lib/types";
 export const Route = createFileRoute("/blogs/$slug")({
   head: ({ params, loaderData }) => {
     const post = (loaderData ?? null) as BlogPost | null;
+    const title = `${post?.title_lv ?? params.slug} | geobalt.lv blogs`;
+    const description = post?.excerpt_lv ?? "Raksts par ģeodēzijas tehnoloģijām un mērniecības praksi.";
+    const url = `https://geobalt.lv/blogs/${params.slug}`;
+    const meta: Array<Record<string, string>> = [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:url", content: url },
+      { property: "og:type", content: "article" },
+    ];
+    if (post?.cover_url) {
+      meta.push({ property: "og:image", content: post.cover_url });
+      meta.push({ name: "twitter:image", content: post.cover_url });
+    }
     return {
-      meta: [
-        { title: `${post?.title_lv ?? params.slug} | geobalt.lv blogs` },
-        { name: "description", content: post?.excerpt_lv ?? "" },
-      ],
+      meta,
+      links: [{ rel: "canonical", href: url }],
+      scripts: post
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                headline: post.title_lv,
+                description: post.excerpt_lv ?? undefined,
+                image: post.cover_url ?? undefined,
+                datePublished: post.published_at,
+                mainEntityOfPage: url,
+              }),
+            },
+          ]
+        : undefined,
     };
   },
   loader: async ({ params }) => {

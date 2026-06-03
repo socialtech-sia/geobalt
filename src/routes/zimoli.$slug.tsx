@@ -8,7 +8,22 @@ import { lv } from "@/lib/i18n";
 import type { Brand, Product, Category } from "@/lib/types";
 
 export const Route = createFileRoute("/zimoli/$slug")({
-  head: ({ params }) => ({ meta: [{ title: `${params.slug} | Katalogs | geobalt.lv` }] }),
+  head: ({ params }) => {
+    const title = `${params.slug} — ģeodēzijas aprīkojums | geobalt.lv`;
+    const description = `${params.slug} aprīkojuma katalogs — oficiālā pārstāvniecība Baltijā. GNSS, nivelieri, lauka datori un piederumi.`;
+    const url = `https://geobalt.lv/zimoli/${params.slug}`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: BrandCatalogPage,
 });
 

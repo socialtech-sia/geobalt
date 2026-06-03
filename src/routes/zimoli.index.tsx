@@ -5,7 +5,22 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/zimoli/")({
-  head: () => ({ meta: [{ title: "Zīmoli | geobalt.lv" }] }),
+  head: () => {
+    const title = "Zīmoli | geobalt.lv";
+    const description = "Oficiālā pārstāvniecība vadošajiem ģeodēzijas aprīkojuma zīmoliem — Satlab, Stonex, Carlson, Juniper Systems, Getac un Trig-A-Cap.";
+    const url = "https://geobalt.lv/zimoli";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: BrandsPage,
 });
 

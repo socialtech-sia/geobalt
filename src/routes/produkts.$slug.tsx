@@ -10,12 +10,49 @@ import { useProductImages } from "@/lib/useProductImages";
 import type { Product } from "@/lib/types";
 
 export const Route = createFileRoute("/produkts/$slug")({
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} | geobalt.lv` },
-      { name: "description", content: "Profesionāls ģeodēzijas aprīkojums — pieprasi cenu un specifikācijas." },
-    ],
-  }),
+  loader: async ({ params }) => {
+    const { data } = await supabase
+      .from("products")
+      .select("name, slug, short_desc_lv, full_desc_lv, brands(name)")
+      .eq("slug", params.slug)
+      .eq("is_active", true)
+      .maybeSingle();
+    return data as { name: string; slug: string; short_desc_lv: string | null; full_desc_lv: string | null; brands?: { name: string } | null } | null;
+  },
+  head: ({ params, loaderData }) => {
+    const p = loaderData;
+    const name = p?.name ?? params.slug;
+    const brand = p?.brands?.name;
+    const title = `${name}${brand ? ` ${brand}` : ""} | geobalt.lv`;
+    const description = p?.short_desc_lv?.slice(0, 160) ?? `${name} — profesionāls ģeodēzijas aprīkojums. Pieprasi cenu un specifikācijas geobalt.lv.`;
+    const url = `https://geobalt.lv/produkts/${params.slug}`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "product" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: p
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Product",
+                name,
+                brand: brand ? { "@type": "Brand", name: brand } : undefined,
+                description: p.short_desc_lv ?? p.full_desc_lv ?? undefined,
+                url,
+              }),
+            },
+          ]
+        : undefined,
+    };
+  },
   component: ProductPage,
 });
 
@@ -111,7 +148,10 @@ function ProductPage() {
               {gallery.slice(0, 8).map((img, i) => (
                 <button
                   key={i}
+                  type="button"
                   onClick={() => setActiveImg(i)}
+                  aria-label={`Rādīt ${product.name} attēlu ${i + 1}`}
+                  aria-pressed={i === activeImg}
                   className={`aspect-square bg-card border rounded-lg overflow-hidden ${i === activeImg ? "border-accent" : "border-line"}`}
                 >
                   <img src={img.url} alt="" className="w-full h-full object-cover" />

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/privatuma-politika")({
       { property: "og:type", content: "website" },
     ],
     links: [
-      { rel: "canonical", href: "/privatuma-politika" },
+      { rel: "canonical", href: "https://geobalt.lv/privatuma-politika" },
     ],
   }),
   component: PrivacyPage,

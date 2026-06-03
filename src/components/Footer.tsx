@@ -23,8 +23,12 @@ export function Footer() {
           </div>
           <p className="mt-4 text-sm text-white/60 leading-relaxed max-w-xs">{lv.footer.about}</p>
           <div className="flex gap-2 mt-5">
-            {[Linkedin, Facebook, Instagram].map((Icon, i) => (
-              <a key={i} href="#" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors">
+            {[
+              { Icon: Linkedin, label: "LinkedIn" },
+              { Icon: Facebook, label: "Facebook" },
+              { Icon: Instagram, label: "Instagram" },
+            ].map(({ Icon, label }) => (
+              <a key={label} href="#" aria-label={label} className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors">
                 <Icon size={16} />
               </a>
             ))}

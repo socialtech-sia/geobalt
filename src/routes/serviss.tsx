@@ -4,7 +4,22 @@ import { lv } from "@/lib/i18n";
 import { useRequestModal } from "@/components/request-modal-context";
 
 export const Route = createFileRoute("/serviss")({
-  head: () => ({ meta: [{ title: "Serviss un kalibrēšana | geobalt.lv" }] }),
+  head: () => {
+    const title = "Serviss un kalibrēšana | geobalt.lv";
+    const description = "Tehniskais serviss, sertificēta kalibrēšana un aizvietošanas tehnika visam mūsu piegādātajam ģeodēzijas aprīkojumam.";
+    const url = "https://geobalt.lv/serviss";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: ServicePage,
 });
 
@@ -25,7 +40,7 @@ function ServicePage() {
         ].map((x) => (
           <div key={x.t} className="bg-card border border-line rounded-2xl p-6">
             <x.I className="text-accent mb-4" size={28} />
-            <h3 className="text-xl mb-2">{x.t}</h3>
+            <h2 className="text-xl mb-2">{x.t}</h2>
             <p className="text-muted text-sm">{x.d}</p>
           </div>
         ))}
