@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lv, CATEGORY_NAV } from "@/lib/i18n";
 import { ProductCard } from "@/components/ProductCard";
@@ -70,6 +70,13 @@ function CatalogPage() {
   const [ip, setIp] = useState<string[]>([]);
   const [avail, setAvail] = useState<string[]>([]);
   const [sort, setSort] = useState<"popular" | "accuracy" | "new">("popular");
+
+  // Sync industry filter when URL search (sub/industry) changes
+  // (back/forward, or clicking a different sub-link on the same route).
+  useEffect(() => {
+    setIndustries(initialIndustry ? [initialIndustry] : []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category, search.sub, search.industry]);
 
   const ipOptions = useMemo(() => Array.from(new Set(products.map((p) => p.ip_class).filter(Boolean))) as string[], [products]);
 
