@@ -4,7 +4,22 @@ import { lv } from "@/lib/i18n";
 import { useRequestModal } from "@/components/request-modal-context";
 
 export const Route = createFileRoute("/serviss")({
-  head: () => ({ meta: [{ title: "Serviss un kalibrēšana | geobalt.lv" }] }),
+  head: () => {
+    const title = "Serviss un kalibrēšana | geobalt.lv";
+    const description = "Tehniskais serviss, sertificēta kalibrēšana un aizvietošanas tehnika visam mūsu piegādātajam ģeodēzijas aprīkojumam.";
+    const url = "https://geobalt.lv/serviss";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: ServicePage,
 });
 
