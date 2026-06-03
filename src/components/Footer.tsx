@@ -56,9 +56,10 @@ export function Footer() {
         <div>
           <h4 className="text-white font-display font-extrabold text-base mb-4">{lv.footer.contacts}</h4>
           <ul className="space-y-3 text-sm text-white/70">
-            <li className="flex items-start gap-2"><MapPin size={14} className="mt-0.5 text-accent" /> {lv.footer.address}</li>
-            <li className="flex items-center gap-2"><Phone size={14} className="text-accent" /> <span className="font-mono-spec">{lv.footer.phone}</span></li>
-            <li className="flex items-center gap-2"><Mail size={14} className="text-accent" /> {lv.footer.email}</li>
+            <li className="flex items-start gap-2"><MapPin size={14} className="mt-0.5 text-accent" /> {address}</li>
+            <li className="flex items-center gap-2"><Phone size={14} className="text-accent" /> <span className="font-mono-spec">{phone}</span></li>
+            <li className="flex items-center gap-2"><Mail size={14} className="text-accent" /> {email}</li>
+            {hours && <li className="flex items-start gap-2"><Clock size={14} className="mt-0.5 text-accent" /> {hours}</li>}
           </ul>
           <button onClick={() => openModal()} className="btn-accent mt-5 text-sm">{lv.cta.contactUs}</button>
         </div>
