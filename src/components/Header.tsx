@@ -36,7 +36,7 @@ export function Header() {
                           key={s.slug}
                           to="/katalogs/$category"
                           params={{ category: c.slug }}
-                          search={{ sub: s.slug }}
+                          search={{ sub: s.slug } as never}
                           className="block px-4 py-2 text-white/85 hover:bg-white/5 hover:text-accent"
                         >
                           <div className="text-sm font-medium">{s.label}</div>
@@ -95,7 +95,7 @@ export function Header() {
                         key={s.slug}
                         to="/katalogs/$category"
                         params={{ category: c.slug }}
-                        search={{ sub: s.slug }}
+                        search={{ sub: s.slug } as never}
                         onClick={() => setOpenMobile(false)}
                         className="block px-3 py-1.5 text-white/60 hover:text-accent text-sm"
                       >
