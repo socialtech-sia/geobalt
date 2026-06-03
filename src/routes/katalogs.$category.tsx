@@ -21,6 +21,14 @@ export const Route = createFileRoute("/katalogs/$category")({
   component: CatalogPage,
 });
 
+function subToIndustry(sub: string | undefined): string | undefined {
+  if (!sub) return undefined;
+  if (sub === "mernieciba") return "merniecība";
+  if (sub === "celabuve") return "celabuve";
+  if (sub === "mezsaimnieciba") return "mezsaimnieciba";
+  return undefined;
+}
+
 function CatalogPage() {
   const { category } = Route.useParams();
   const search = Route.useSearch() as { industry?: string; sub?: string };
