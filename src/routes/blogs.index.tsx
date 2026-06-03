@@ -4,7 +4,7 @@ import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { BlogPost } from "@/lib/types";
 
-export const Route = createFileRoute("/blogs")({
+export const Route = createFileRoute("/blogs/")({
   head: () => ({ meta: [{ title: "Blogs | geobalt.lv" }] }),
   component: BlogsPage,
 });
