@@ -14,7 +14,318 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      blog_posts: {
+        Row: {
+          body_lv: string | null
+          cover_url: string | null
+          excerpt_lv: string | null
+          id: string
+          published_at: string
+          slug: string
+          tag_lv: string | null
+          title_lv: string
+        }
+        Insert: {
+          body_lv?: string | null
+          cover_url?: string | null
+          excerpt_lv?: string | null
+          id?: string
+          published_at?: string
+          slug: string
+          tag_lv?: string | null
+          title_lv: string
+        }
+        Update: {
+          body_lv?: string | null
+          cover_url?: string | null
+          excerpt_lv?: string | null
+          id?: string
+          published_at?: string
+          slug?: string
+          tag_lv?: string | null
+          title_lv?: string
+        }
+        Relationships: []
+      }
+      brands: {
+        Row: {
+          blurb_lv: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          blurb_lv?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          blurb_lv?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          created_at: string
+          description_lv: string | null
+          icon: string | null
+          id: string
+          name_lv: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description_lv?: string | null
+          icon?: string | null
+          id?: string
+          name_lv: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          description_lv?: string | null
+          icon?: string | null
+          id?: string
+          name_lv?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          full_name: string
+          gdpr_consent: boolean
+          id: string
+          message: string | null
+          phone: string
+          product_id: string | null
+          product_name: string | null
+          source_page: string | null
+          status: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          gdpr_consent?: boolean
+          id?: string
+          message?: string | null
+          phone: string
+          product_id?: string | null
+          product_name?: string | null
+          source_page?: string | null
+          status?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          gdpr_consent?: boolean
+          id?: string
+          message?: string | null
+          phone?: string
+          product_id?: string | null
+          product_name?: string | null
+          source_page?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_images: {
+        Row: {
+          id: string
+          is_primary: boolean
+          product_id: string
+          sort_order: number
+          url: string
+        }
+        Insert: {
+          id?: string
+          is_primary?: boolean
+          product_id: string
+          sort_order?: number
+          url: string
+        }
+        Update: {
+          id?: string
+          is_primary?: boolean
+          product_id?: string
+          sort_order?: number
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_images_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_specs: {
+        Row: {
+          id: string
+          label_lv: string
+          product_id: string
+          sort_order: number
+          value: string
+        }
+        Insert: {
+          id?: string
+          label_lv: string
+          product_id: string
+          sort_order?: number
+          value: string
+        }
+        Update: {
+          id?: string
+          label_lv?: string
+          product_id?: string
+          sort_order?: number
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_specs_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          accuracy: string | null
+          battery_h: string | null
+          brand_id: string | null
+          category_id: string | null
+          created_at: string
+          full_desc_lv: string | null
+          id: string
+          industries: string[]
+          ip_class: string | null
+          is_available_rent: boolean
+          is_available_sale: boolean
+          is_popular: boolean
+          name: string
+          short_desc_lv: string | null
+          slug: string
+          sort_order: number
+          weight_kg: string | null
+        }
+        Insert: {
+          accuracy?: string | null
+          battery_h?: string | null
+          brand_id?: string | null
+          category_id?: string | null
+          created_at?: string
+          full_desc_lv?: string | null
+          id?: string
+          industries?: string[]
+          ip_class?: string | null
+          is_available_rent?: boolean
+          is_available_sale?: boolean
+          is_popular?: boolean
+          name: string
+          short_desc_lv?: string | null
+          slug: string
+          sort_order?: number
+          weight_kg?: string | null
+        }
+        Update: {
+          accuracy?: string | null
+          battery_h?: string | null
+          brand_id?: string | null
+          category_id?: string | null
+          created_at?: string
+          full_desc_lv?: string | null
+          id?: string
+          industries?: string[]
+          ip_class?: string | null
+          is_available_rent?: boolean
+          is_available_sale?: boolean
+          is_popular?: boolean
+          name?: string
+          short_desc_lv?: string | null
+          slug?: string
+          sort_order?: number
+          weight_kg?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          author_name: string
+          author_role_lv: string | null
+          company: string | null
+          id: string
+          industry: string | null
+          quote_lv: string
+          sort_order: number
+        }
+        Insert: {
+          author_name: string
+          author_role_lv?: string | null
+          company?: string | null
+          id?: string
+          industry?: string | null
+          quote_lv: string
+          sort_order?: number
+        }
+        Update: {
+          author_name?: string
+          author_role_lv?: string | null
+          company?: string | null
+          id?: string
+          industry?: string | null
+          quote_lv?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
