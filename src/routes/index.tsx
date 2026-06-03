@@ -298,7 +298,7 @@ function BlogPreview() {
   const { data: posts = [] } = useQuery({
     queryKey: ["blog-preview"],
     queryFn: async () => {
-      const { data } = await supabase.from("blog_posts").select("*").order("published_at", { ascending: false }).limit(3);
+      const { data } = await supabase.from("blog_posts").select("*").eq("status", "published").lte("published_at", new Date().toISOString()).order("published_at", { ascending: false }).limit(3);
       return (data as BlogPost[]) ?? [];
     },
   });
