@@ -24,16 +24,15 @@ export function RequestModal() {
   const [success, setSuccess] = useState(false);
   const [submitErr, setSubmitErr] = useState<string | null>(null);
 
-  const form = useForm<FormVals>({
-    resolver: zodResolver(schema),
+  const form = useForm({
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       full_name: "",
       company: "",
       email: "",
       phone: "",
       message: "",
-      // @ts-expect-error rhf default
-      gdpr_consent: false,
+      gdpr_consent: false as unknown as true,
     },
   });
 
