@@ -21,10 +21,19 @@ export const Route = createFileRoute("/katalogs/$category")({
   component: CatalogPage,
 });
 
+function subToIndustry(sub: string | undefined): string | undefined {
+  if (!sub) return undefined;
+  if (sub === "mernieciba") return "merniecība";
+  if (sub === "celabuve") return "celabuve";
+  if (sub === "mezsaimnieciba") return "mezsaimnieciba";
+  return undefined;
+}
+
 function CatalogPage() {
   const { category } = Route.useParams();
-  const search = Route.useSearch() as { industry?: string };
-  const initialIndustry = search.industry;
+  const search = Route.useSearch() as { industry?: string; sub?: string };
+  const initialIndustry = search.industry ?? (category === "gnss" ? subToIndustry(search.sub) : undefined);
+  const initialSub = category === "nivelieri-lazeri" ? search.sub : undefined;
 
   const { data: cat } = useQuery({
     queryKey: ["category", category],
@@ -71,11 +80,17 @@ function CatalogPage() {
       if (ip.length && !ip.includes(p.ip_class ?? "")) return false;
       if (avail.includes("sale") && !p.is_available_sale) return false;
       if (avail.includes("rent") && !p.is_available_rent) return false;
+      if (initialSub) {
+        const n = p.name.toLowerCase();
+        const isLaser = /lāzer|lazer|laser/.test(n);
+        if (initialSub === "lazeru" && !isLaser) return false;
+        if (initialSub === "optiskie" && isLaser) return false;
+      }
       return true;
     });
     if (sort === "accuracy") list = [...list].sort((a, b) => (a.accuracy ?? "").localeCompare(b.accuracy ?? ""));
     return list;
-  }, [products, industries, brandIds, ip, avail, sort]);
+  }, [products, industries, brandIds, ip, avail, sort, initialSub]);
 
   const toggle = (arr: string[], v: string, set: (x: string[]) => void) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
