@@ -40,7 +40,7 @@ function ServicePage() {
         ].map((x) => (
           <div key={x.t} className="bg-card border border-line rounded-2xl p-6">
             <x.I className="text-accent mb-4" size={28} />
-            <h3 className="text-xl mb-2">{x.t}</h3>
+            <h2 className="text-xl mb-2">{x.t}</h2>
             <p className="text-muted text-sm">{x.d}</p>
           </div>
         ))}
