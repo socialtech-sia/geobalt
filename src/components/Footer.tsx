@@ -1,10 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { CATEGORY_NAV, lv } from "@/lib/i18n";
 import { useRequestModal } from "./request-modal-context";
-import { Mail, MapPin, Phone, Linkedin, Facebook, Instagram } from "lucide-react";
+import { Mail, MapPin, Phone, Clock, Linkedin, Facebook, Instagram } from "lucide-react";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 
 export function Footer() {
   const { openModal } = useRequestModal();
+  const { data: settings } = useSiteSettings();
+  const phone = settings?.contact_phone ?? lv.footer.phone;
+  const email = settings?.contact_email ?? lv.footer.email;
+  const address = settings?.contact_address_lv ?? lv.footer.address;
+  const hours = settings?.working_hours_lv;
+  const showBlog = settings?.show_blog ?? true;
 
   return (
     <footer className="relative topo-bg text-white mt-20">
