@@ -24,9 +24,13 @@ import { Route as ProduktsSlugRouteImport } from './routes/produkts.$slug'
 import { Route as KatalogsCategoryRouteImport } from './routes/katalogs.$category'
 import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminReviewsRouteImport } from './routes/admin.reviews'
 import { Route as AdminProductsRouteImport } from './routes/admin.products'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
+import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as AdminBrandsRouteImport } from './routes/admin.brands'
+import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminProductsIndexRouteImport } from './routes/admin.products.index'
 import { Route as AdminProductsIdRouteImport } from './routes/admin.products.$id'
 
@@ -105,6 +109,11 @@ const AdminSettingsRoute = AdminSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminReviewsRoute = AdminReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminProductsRoute = AdminProductsRouteImport.update({
   id: '/products',
   path: '/products',
@@ -118,6 +127,21 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
 const AdminLeadsRoute = AdminLeadsRouteImport.update({
   id: '/leads',
   path: '/leads',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBrandsRoute = AdminBrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogRoute = AdminBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminProductsIndexRoute = AdminProductsIndexRouteImport.update({
@@ -142,9 +166,13 @@ export interface FileRoutesByFullPath {
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/brands': typeof AdminBrandsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/products': typeof AdminProductsRouteWithChildren
+  '/admin/reviews': typeof AdminReviewsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
@@ -163,8 +191,12 @@ export interface FileRoutesByTo {
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/brands': typeof AdminBrandsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/reviews': typeof AdminReviewsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
@@ -185,9 +217,13 @@ export interface FileRoutesById {
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
   '/zimoli': typeof ZimoliRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/brands': typeof AdminBrandsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/products': typeof AdminProductsRouteWithChildren
+  '/admin/reviews': typeof AdminReviewsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
@@ -209,9 +245,13 @@ export interface FileRouteTypes {
     | '/serviss'
     | '/sikdatnes'
     | '/zimoli'
+    | '/admin/blog'
+    | '/admin/brands'
+    | '/admin/categories'
     | '/admin/leads'
     | '/admin/login'
     | '/admin/products'
+    | '/admin/reviews'
     | '/admin/settings'
     | '/blogs/$slug'
     | '/katalogs/$category'
@@ -230,8 +270,12 @@ export interface FileRouteTypes {
     | '/serviss'
     | '/sikdatnes'
     | '/zimoli'
+    | '/admin/blog'
+    | '/admin/brands'
+    | '/admin/categories'
     | '/admin/leads'
     | '/admin/login'
+    | '/admin/reviews'
     | '/admin/settings'
     | '/blogs/$slug'
     | '/katalogs/$category'
@@ -251,9 +295,13 @@ export interface FileRouteTypes {
     | '/serviss'
     | '/sikdatnes'
     | '/zimoli'
+    | '/admin/blog'
+    | '/admin/brands'
+    | '/admin/categories'
     | '/admin/leads'
     | '/admin/login'
     | '/admin/products'
+    | '/admin/reviews'
     | '/admin/settings'
     | '/blogs/$slug'
     | '/katalogs/$category'
@@ -385,6 +433,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/reviews': {
+      id: '/admin/reviews'
+      path: '/reviews'
+      fullPath: '/admin/reviews'
+      preLoaderRoute: typeof AdminReviewsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/products': {
       id: '/admin/products'
       path: '/products'
@@ -404,6 +459,27 @@ declare module '@tanstack/react-router' {
       path: '/leads'
       fullPath: '/admin/leads'
       preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/brands': {
+      id: '/admin/brands'
+      path: '/brands'
+      fullPath: '/admin/brands'
+      preLoaderRoute: typeof AdminBrandsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/blog': {
+      id: '/admin/blog'
+      path: '/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AdminBlogRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/products/': {
@@ -438,17 +514,25 @@ const AdminProductsRouteWithChildren = AdminProductsRoute._addFileChildren(
 )
 
 interface AdminRouteChildren {
+  AdminBlogRoute: typeof AdminBlogRoute
+  AdminBrandsRoute: typeof AdminBrandsRoute
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminProductsRoute: typeof AdminProductsRouteWithChildren
+  AdminReviewsRoute: typeof AdminReviewsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminBlogRoute: AdminBlogRoute,
+  AdminBrandsRoute: AdminBrandsRoute,
+  AdminCategoriesRoute: AdminCategoriesRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminProductsRoute: AdminProductsRouteWithChildren,
+  AdminReviewsRoute: AdminReviewsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
