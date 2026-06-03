@@ -36,7 +36,7 @@ function GDPRPage() {
           {[
             { title: "Tiesības piekļūt", desc: "Tu vari lūgt informāciju par to, kādi Tavi dati tiek apstrādāti un kādiem nolūkiem." },
             { title: "Tiesības labot", desc: "Ja Tavi dati ir neprecīzi vai nepilnīgi, Tu vari pieprasīt to labošanu." },
-            { title: "Tiesības dzēst", desc: "Tiesības pieprasīt savu datu dzēšanu („tikt aizmirstam"), ja nav citu juridisku pamatu to glabāšanai." },
+            { title: "Tiesības dzēst", desc: "Tiesības pieprasīt savu datu dzēšanu (\u201etikt aizmirstam\u201c), ja nav citu juridisku pamatu to glabāšanai." },
             { title: "Tiesības ierobežot", desc: "Tu vari pieprasīt ierobežot datu apstrādi noteiktos apstākļos." },
             { title: "Tiesības pārnest", desc: "Tiesības saņemt savus datus strukturētā, parastā un mašīnlasāmā formātā." },
             { title: "Tiesības iebilst", desc: "Tu vari iebilst pret datu apstrādi, kas balstīta uz likumīgām interesēm vai tiešā mārketinga nolūkiem." },
