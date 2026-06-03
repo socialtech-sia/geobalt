@@ -20,6 +20,7 @@ import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as ZimoliSlugRouteImport } from './routes/zimoli.$slug'
 import { Route as ProduktsSlugRouteImport } from './routes/produkts.$slug'
 import { Route as KatalogsCategoryRouteImport } from './routes/katalogs.$category'
 import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
@@ -88,6 +89,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const ZimoliSlugRoute = ZimoliSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ZimoliRoute,
 } as any)
 const ProduktsSlugRoute = ProduktsSlugRouteImport.update({
   id: '/produkts/$slug',
@@ -165,7 +171,7 @@ export interface FileRoutesByFullPath {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
-  '/zimoli': typeof ZimoliRoute
+  '/zimoli': typeof ZimoliRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -177,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
   '/produkts/$slug': typeof ProduktsSlugRoute
+  '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/': typeof AdminProductsIndexRoute
@@ -190,7 +197,7 @@ export interface FileRoutesByTo {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
-  '/zimoli': typeof ZimoliRoute
+  '/zimoli': typeof ZimoliRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
   '/produkts/$slug': typeof ProduktsSlugRoute
+  '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin': typeof AdminIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products': typeof AdminProductsIndexRoute
@@ -216,7 +224,7 @@ export interface FileRoutesById {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
-  '/zimoli': typeof ZimoliRoute
+  '/zimoli': typeof ZimoliRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -228,6 +236,7 @@ export interface FileRoutesById {
   '/blogs/$slug': typeof BlogsSlugRoute
   '/katalogs/$category': typeof KatalogsCategoryRoute
   '/produkts/$slug': typeof ProduktsSlugRoute
+  '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/': typeof AdminProductsIndexRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
     | '/blogs/$slug'
     | '/katalogs/$category'
     | '/produkts/$slug'
+    | '/zimoli/$slug'
     | '/admin/'
     | '/admin/products/$id'
     | '/admin/products/'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/blogs/$slug'
     | '/katalogs/$category'
     | '/produkts/$slug'
+    | '/zimoli/$slug'
     | '/admin'
     | '/admin/products/$id'
     | '/admin/products'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/blogs/$slug'
     | '/katalogs/$category'
     | '/produkts/$slug'
+    | '/zimoli/$slug'
     | '/admin/'
     | '/admin/products/$id'
     | '/admin/products/'
@@ -321,7 +333,7 @@ export interface RootRouteChildren {
   PrivatumaPolitikaRoute: typeof PrivatumaPolitikaRoute
   ServissRoute: typeof ServissRoute
   SikdatnesRoute: typeof SikdatnesRoute
-  ZimoliRoute: typeof ZimoliRoute
+  ZimoliRoute: typeof ZimoliRouteWithChildren
   KatalogsCategoryRoute: typeof KatalogsCategoryRoute
   ProduktsSlugRoute: typeof ProduktsSlugRoute
 }
@@ -404,6 +416,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/zimoli/$slug': {
+      id: '/zimoli/$slug'
+      path: '/$slug'
+      fullPath: '/zimoli/$slug'
+      preLoaderRoute: typeof ZimoliSlugRouteImport
+      parentRoute: typeof ZimoliRoute
     }
     '/produkts/$slug': {
       id: '/produkts/$slug'
@@ -549,6 +568,17 @@ const BlogsRouteChildren: BlogsRouteChildren = {
 
 const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
 
+interface ZimoliRouteChildren {
+  ZimoliSlugRoute: typeof ZimoliSlugRoute
+}
+
+const ZimoliRouteChildren: ZimoliRouteChildren = {
+  ZimoliSlugRoute: ZimoliSlugRoute,
+}
+
+const ZimoliRouteWithChildren =
+  ZimoliRoute._addFileChildren(ZimoliRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -559,20 +589,10 @@ const rootRouteChildren: RootRouteChildren = {
   PrivatumaPolitikaRoute: PrivatumaPolitikaRoute,
   ServissRoute: ServissRoute,
   SikdatnesRoute: SikdatnesRoute,
-  ZimoliRoute: ZimoliRoute,
+  ZimoliRoute: ZimoliRouteWithChildren,
   KatalogsCategoryRoute: KatalogsCategoryRoute,
   ProduktsSlugRoute: ProduktsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
