@@ -81,6 +81,26 @@
     letter-spacing: -0.02em;
     font-weight: 800;
   }
+
+  /* Тонкий синий скроллбар */
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2563EB;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1D4ED8;
+  }
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #2563EB transparent;
+  }
 }
 
 @layer components {
