@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Brand } from "@/lib/types";
 
-export const Route = createFileRoute("/zimoli")({
+export const Route = createFileRoute("/zimoli/")({
   head: () => ({ meta: [{ title: "Zīmoli | geobalt.lv" }] }),
   component: BrandsPage,
 });
