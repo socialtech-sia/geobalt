@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ZimoliRouteImport } from './routes/zimoli'
 import { Route as SikdatnesRouteImport } from './routes/sikdatnes'
 import { Route as ServissRouteImport } from './routes/serviss'
 import { Route as PrivatumaPolitikaRouteImport } from './routes/privatuma-politika'
@@ -18,6 +17,7 @@ import { Route as KontaktiRouteImport } from './routes/kontakti'
 import { Route as GdprRouteImport } from './routes/gdpr'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ZimoliIndexRouteImport } from './routes/zimoli.index'
 import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ZimoliSlugRouteImport } from './routes/zimoli.$slug'
@@ -35,11 +35,6 @@ import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminProductsIndexRouteImport } from './routes/admin.products.index'
 import { Route as AdminProductsIdRouteImport } from './routes/admin.products.$id'
 
-const ZimoliRoute = ZimoliRouteImport.update({
-  id: '/zimoli',
-  path: '/zimoli',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SikdatnesRoute = SikdatnesRouteImport.update({
   id: '/sikdatnes',
   path: '/sikdatnes',
@@ -78,6 +73,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ZimoliIndexRoute = ZimoliIndexRouteImport.update({
+  id: '/zimoli/',
+  path: '/zimoli/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogsIndexRoute = BlogsIndexRouteImport.update({
@@ -170,7 +170,6 @@ export interface FileRoutesByFullPath {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
-  '/zimoli': typeof ZimoliRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -185,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blogs/': typeof BlogsIndexRoute
+  '/zimoli/': typeof ZimoliIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/': typeof AdminProductsIndexRoute
 }
@@ -196,7 +196,6 @@ export interface FileRoutesByTo {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
-  '/zimoli': typeof ZimoliRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -210,6 +209,7 @@ export interface FileRoutesByTo {
   '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin': typeof AdminIndexRoute
   '/blogs': typeof BlogsIndexRoute
+  '/zimoli': typeof ZimoliIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products': typeof AdminProductsIndexRoute
 }
@@ -223,7 +223,6 @@ export interface FileRoutesById {
   '/privatuma-politika': typeof PrivatumaPolitikaRoute
   '/serviss': typeof ServissRoute
   '/sikdatnes': typeof SikdatnesRoute
-  '/zimoli': typeof ZimoliRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/brands': typeof AdminBrandsRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -238,6 +237,7 @@ export interface FileRoutesById {
   '/zimoli/$slug': typeof ZimoliSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blogs/': typeof BlogsIndexRoute
+  '/zimoli/': typeof ZimoliIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/': typeof AdminProductsIndexRoute
 }
@@ -252,7 +252,6 @@ export interface FileRouteTypes {
     | '/privatuma-politika'
     | '/serviss'
     | '/sikdatnes'
-    | '/zimoli'
     | '/admin/blog'
     | '/admin/brands'
     | '/admin/categories'
@@ -267,6 +266,7 @@ export interface FileRouteTypes {
     | '/zimoli/$slug'
     | '/admin/'
     | '/blogs/'
+    | '/zimoli/'
     | '/admin/products/$id'
     | '/admin/products/'
   fileRoutesByTo: FileRoutesByTo
@@ -278,7 +278,6 @@ export interface FileRouteTypes {
     | '/privatuma-politika'
     | '/serviss'
     | '/sikdatnes'
-    | '/zimoli'
     | '/admin/blog'
     | '/admin/brands'
     | '/admin/categories'
@@ -292,6 +291,7 @@ export interface FileRouteTypes {
     | '/zimoli/$slug'
     | '/admin'
     | '/blogs'
+    | '/zimoli'
     | '/admin/products/$id'
     | '/admin/products'
   id:
@@ -304,7 +304,6 @@ export interface FileRouteTypes {
     | '/privatuma-politika'
     | '/serviss'
     | '/sikdatnes'
-    | '/zimoli'
     | '/admin/blog'
     | '/admin/brands'
     | '/admin/categories'
@@ -319,6 +318,7 @@ export interface FileRouteTypes {
     | '/zimoli/$slug'
     | '/admin/'
     | '/blogs/'
+    | '/zimoli/'
     | '/admin/products/$id'
     | '/admin/products/'
   fileRoutesById: FileRoutesById
@@ -332,22 +332,15 @@ export interface RootRouteChildren {
   PrivatumaPolitikaRoute: typeof PrivatumaPolitikaRoute
   ServissRoute: typeof ServissRoute
   SikdatnesRoute: typeof SikdatnesRoute
-  ZimoliRoute: typeof ZimoliRouteWithChildren
   BlogsSlugRoute: typeof BlogsSlugRoute
   KatalogsCategoryRoute: typeof KatalogsCategoryRoute
   ProduktsSlugRoute: typeof ProduktsSlugRoute
   BlogsIndexRoute: typeof BlogsIndexRoute
+  ZimoliIndexRoute: typeof ZimoliIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/zimoli': {
-      id: '/zimoli'
-      path: '/zimoli'
-      fullPath: '/zimoli'
-      preLoaderRoute: typeof ZimoliRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sikdatnes': {
       id: '/sikdatnes'
       path: '/sikdatnes'
@@ -402,6 +395,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/zimoli/': {
+      id: '/zimoli/'
+      path: '/zimoli'
+      fullPath: '/zimoli/'
+      preLoaderRoute: typeof ZimoliIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blogs/': {
@@ -559,17 +559,6 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
-interface ZimoliRouteChildren {
-  ZimoliSlugRoute: typeof ZimoliSlugRoute
-}
-
-const ZimoliRouteChildren: ZimoliRouteChildren = {
-  ZimoliSlugRoute: ZimoliSlugRoute,
-}
-
-const ZimoliRouteWithChildren =
-  ZimoliRoute._addFileChildren(ZimoliRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -579,11 +568,11 @@ const rootRouteChildren: RootRouteChildren = {
   PrivatumaPolitikaRoute: PrivatumaPolitikaRoute,
   ServissRoute: ServissRoute,
   SikdatnesRoute: SikdatnesRoute,
-  ZimoliRoute: ZimoliRouteWithChildren,
   BlogsSlugRoute: BlogsSlugRoute,
   KatalogsCategoryRoute: KatalogsCategoryRoute,
   ProduktsSlugRoute: ProduktsSlugRoute,
   BlogsIndexRoute: BlogsIndexRoute,
+  ZimoliIndexRoute: ZimoliIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
