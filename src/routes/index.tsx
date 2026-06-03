@@ -119,7 +119,7 @@ function Hero() {
                   />
                 ))}
               </div>
-              <span className="font-mono-spec text-xs text-white/40">slaids {i + 1} no {slides.length}</span>
+              <span className="font-mono-spec text-xs text-white/70">slaids {i + 1} no {slides.length}</span>
             </div>
           )}
         </div>
