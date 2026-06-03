@@ -79,15 +79,32 @@ export function Header() {
         {openMobile && (
           <div className="lg:hidden pb-4 space-y-1 border-t border-white/5 pt-3">
             {CATEGORY_NAV.map((c) => (
-              <Link
-                key={c.slug}
-                to="/katalogs/$category"
-                params={{ category: c.slug }}
-                onClick={() => setOpenMobile(false)}
-                className="block px-3 py-2 text-white/80 hover:text-accent"
-              >
-                {c.label}
-              </Link>
+              <div key={c.slug}>
+                <Link
+                  to="/katalogs/$category"
+                  params={{ category: c.slug }}
+                  onClick={() => setOpenMobile(false)}
+                  className="block px-3 py-2 text-white/80 hover:text-accent font-medium"
+                >
+                  {c.label}
+                </Link>
+                {c.subs && (
+                  <div className="pl-5 border-l border-white/10 ml-3 mb-1">
+                    {c.subs.map((s) => (
+                      <Link
+                        key={s.slug}
+                        to="/katalogs/$category"
+                        params={{ category: c.slug }}
+                        search={{ sub: s.slug }}
+                        onClick={() => setOpenMobile(false)}
+                        className="block px-3 py-1.5 text-white/60 hover:text-accent text-sm"
+                      >
+                        {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
             <div className="border-t border-white/10 mt-2 pt-2 space-y-1">
               <Link to="/par-mums" onClick={() => setOpenMobile(false)} className="block px-3 py-2 text-white/70 text-sm">{lv.nav.about}</Link>
