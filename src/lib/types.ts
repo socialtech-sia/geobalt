@@ -26,7 +26,7 @@ export type Category = {
   description_lv: string | null;
 };
 
-export type Brand = { id: string; slug: string; name: string; blurb_lv: string | null };
+export type Brand = { id: string; slug: string; name: string; blurb_lv: string | null; logo_url: string | null; sort_order: number };
 
 export type Review = {
   id: string;
