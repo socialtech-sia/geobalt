@@ -16,7 +16,7 @@ export function Header() {
           <Link to="/" className="font-display text-2xl font-black tracking-tight flex items-baseline gap-0">
             <span className="text-white">GEO</span>
             <span className="text-accent">BALT</span>
-            <span className="font-mono-spec text-xs text-white/40 ml-1">.lv</span>
+            <span className="font-mono-spec text-xs text-white/70 ml-1">.lv</span>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
@@ -44,7 +44,7 @@ export function Header() {
                         >
                           <div className="text-sm font-medium">{s.label}</div>
                           {s.hint && (
-                            <div className="font-mono-spec text-[11px] text-white/40 mt-0.5">{s.hint}</div>
+                            <div className="font-mono-spec text-[11px] text-white/70 mt-0.5">{s.hint}</div>
                           )}
                         </Link>
                       ))}
@@ -58,12 +58,12 @@ export function Header() {
 
           <div className="hidden md:flex items-center gap-3">
             <div className="relative">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/70" />
               <input
                 type="search"
                 aria-label={lv.nav.search}
                 placeholder={lv.nav.search}
-                className="bg-white/5 border border-white/10 rounded-md pl-8 pr-3 py-1.5 text-sm text-white placeholder:text-white/40 w-44 focus:outline-none focus:border-accent"
+                className="bg-white/5 border border-white/10 rounded-md pl-8 pr-3 py-1.5 text-sm text-white placeholder:text-white/70 w-44 focus:outline-none focus:border-accent"
               />
             </div>
             <a href={`tel:${phone.replace(/\s/g, "")}`} className="hidden xl:flex items-center gap-2 text-accent font-mono-spec text-sm whitespace-nowrap">

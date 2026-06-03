@@ -19,7 +19,7 @@ export function Footer() {
         <div>
           <div className="font-display text-2xl font-black flex items-baseline">
             <span>GEO</span><span className="text-accent">BALT</span>
-            <span className="font-mono-spec text-xs text-white/40 ml-1">.lv</span>
+            <span className="font-mono-spec text-xs text-white/70 ml-1">.lv</span>
           </div>
           <p className="mt-4 text-sm text-white/60 leading-relaxed max-w-xs">{lv.footer.about}</p>
           <div className="flex gap-2 mt-5">
@@ -70,7 +70,7 @@ export function Footer() {
       </div>
 
       <div className="relative border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/40 font-mono-spec">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/70 font-mono-spec">
           <span>{lv.footer.copyright}</span>
           <div className="flex gap-4">
             <Link to="/privatuma-politika" className="hover:text-white">{lv.footer.privacy}</Link>
