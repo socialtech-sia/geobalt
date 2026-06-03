@@ -317,14 +317,20 @@ function BlogPreview() {
       </div>
       <div className="grid md:grid-cols-3 gap-6">
         {posts.map((p) => (
-          <Link key={p.id} to="/blogs/$slug" params={{ slug: p.slug }} className="product-card overflow-hidden block">
-            <div className="aspect-[4/3] bg-paper-2 flex items-center justify-center">
-              <Shield size={64} strokeWidth={1.2} className="text-ink/20" />
+          <Link key={p.id} to="/blogs/$slug" params={{ slug: p.slug }} className="group product-card overflow-hidden block bg-paper border border-line rounded-2xl hover:border-accent/30 transition-colors">
+            <div className="aspect-[4/3] bg-ink/5 overflow-hidden">
+              {p.cover_url ? (
+                <img src={p.cover_url} alt={p.title_lv} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-ink/5">
+                  <span className="text-ink/20 font-display text-4xl">GEO</span>
+                </div>
+              )}
             </div>
             <div className="p-5">
-              <span className="pill bg-paper-2 text-ink mb-3">{p.tag_lv ?? "Raksts"}</span>
-              <h3 className="text-lg leading-tight mt-2">{p.title_lv}</h3>
-              <div className="text-xs font-mono-spec text-muted mt-4">3 min lasīšana · 2026</div>
+              <span className="pill bg-paper-2 text-ink text-xs mb-3">{p.tag_lv ?? "Raksts"}</span>
+              <h3 className="text-lg leading-tight mt-2 group-hover:text-accent transition-colors">{p.title_lv}</h3>
+              <div className="text-xs font-mono-spec text-muted mt-4">5 min lasīšana · {new Date(p.published_at).getFullYear()}</div>
             </div>
           </Link>
         ))}
