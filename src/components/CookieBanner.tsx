@@ -81,16 +81,16 @@ export function CookieBanner() {
         </div>
 
         {/* Actions */}
-        <div className="flex flex-nowrap gap-2 mt-4">
-          <button onClick={acceptAll} className="btn-accent text-xs py-2 px-4">
+        <div className="flex flex-nowrap gap-1.5 mt-4">
+          <button onClick={acceptAll} className="btn-accent text-[11px] py-1.5 px-2.5 whitespace-nowrap leading-tight">
             Piekrītu visām
           </button>
-          <button onClick={() => setExpanded((v) => !v)} className="btn-ghost text-xs py-2 px-4">
-            <Settings2 size={13} className="mr-1" />
-            {expanded ? "Aizvērt iestatījumus" : "Pielāgot"}
+          <button onClick={() => setExpanded((v) => !v)} className="btn-ghost text-[11px] py-1.5 px-2.5 whitespace-nowrap leading-tight inline-flex items-center">
+            <Settings2 size={11} className="mr-1" />
+            {expanded ? "Aizvērt" : "Pielāgot"}
           </button>
-          <button onClick={acceptNecessary} className="btn-ghost text-xs py-2 px-4">
-            <Shield size={13} className="mr-1" />
+          <button onClick={acceptNecessary} className="btn-ghost text-[11px] py-1.5 px-2.5 whitespace-nowrap leading-tight inline-flex items-center">
+            <Shield size={11} className="mr-1" />
             Tikai nepieciešamās
           </button>
         </div>
