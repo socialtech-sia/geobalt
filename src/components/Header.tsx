@@ -18,15 +18,37 @@ export function Header() {
 
           <nav className="hidden lg:flex items-center gap-1">
             {CATEGORY_NAV.map((c) => (
-              <Link
-                key={c.slug}
-                to="/katalogs/$category"
-                params={{ category: c.slug }}
-                className="px-3 py-2 text-[13.5px] text-white/80 hover:text-accent transition-colors font-medium"
-                activeProps={{ className: "text-accent" }}
-              >
-                {c.label}
-              </Link>
+              <div key={c.slug} className="relative group">
+                <Link
+                  to="/katalogs/$category"
+                  params={{ category: c.slug }}
+                  className="px-3 py-2 text-[13.5px] text-white/80 hover:text-accent transition-colors font-medium flex items-center gap-1"
+                  activeProps={{ className: "text-accent" }}
+                >
+                  {c.label}
+                  {c.subs && <span className="text-[9px] opacity-60">▾</span>}
+                </Link>
+                {c.subs && (
+                  <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity absolute left-0 top-full pt-2 z-50 min-w-[240px]">
+                    <div className="bg-ink border border-white/10 rounded-md shadow-2xl py-2">
+                      {c.subs.map((s) => (
+                        <Link
+                          key={s.slug}
+                          to="/katalogs/$category"
+                          params={{ category: c.slug }}
+                          search={{ sub: s.slug } as never}
+                          className="block px-4 py-2 text-white/85 hover:bg-white/5 hover:text-accent"
+                        >
+                          <div className="text-sm font-medium">{s.label}</div>
+                          {s.hint && (
+                            <div className="font-mono-spec text-[11px] text-white/40 mt-0.5">{s.hint}</div>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
 
@@ -57,15 +79,32 @@ export function Header() {
         {openMobile && (
           <div className="lg:hidden pb-4 space-y-1 border-t border-white/5 pt-3">
             {CATEGORY_NAV.map((c) => (
-              <Link
-                key={c.slug}
-                to="/katalogs/$category"
-                params={{ category: c.slug }}
-                onClick={() => setOpenMobile(false)}
-                className="block px-3 py-2 text-white/80 hover:text-accent"
-              >
-                {c.label}
-              </Link>
+              <div key={c.slug}>
+                <Link
+                  to="/katalogs/$category"
+                  params={{ category: c.slug }}
+                  onClick={() => setOpenMobile(false)}
+                  className="block px-3 py-2 text-white/80 hover:text-accent font-medium"
+                >
+                  {c.label}
+                </Link>
+                {c.subs && (
+                  <div className="pl-5 border-l border-white/10 ml-3 mb-1">
+                    {c.subs.map((s) => (
+                      <Link
+                        key={s.slug}
+                        to="/katalogs/$category"
+                        params={{ category: c.slug }}
+                        search={{ sub: s.slug } as never}
+                        onClick={() => setOpenMobile(false)}
+                        className="block px-3 py-1.5 text-white/60 hover:text-accent text-sm"
+                      >
+                        {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
             <div className="border-t border-white/10 mt-2 pt-2 space-y-1">
               <Link to="/par-mums" onClick={() => setOpenMobile(false)} className="block px-3 py-2 text-white/70 text-sm">{lv.nav.about}</Link>
