@@ -64,11 +64,10 @@ export function Header() {
                 className="bg-white/5 border border-white/10 rounded-md pl-8 pr-3 py-1.5 text-sm text-white placeholder:text-white/40 w-44 focus:outline-none focus:border-accent"
               />
             </div>
-            <a href={`tel:${phone.replace(/\s/g, "")}`} className="hidden xl:flex items-center gap-2 text-accent font-mono-spec text-sm">
-              <Phone size={14} />
-              {phone}
+            <a href={`tel:${phone.replace(/\s/g, "")}`} className="hidden xl:flex items-center gap-2 text-accent font-mono-spec text-sm whitespace-nowrap">
+              <Phone size={14} className="shrink-0" />
+              <span className="whitespace-nowrap">{phone}</span>
             </a>
-            <span className="pill bg-white/5 text-white/70 border border-white/10">LV ▾</span>
           </div>
 
           <button
