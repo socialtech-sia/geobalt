@@ -15,6 +15,7 @@ import { RequestModalProvider } from "@/components/request-modal-context";
 import { RequestModal } from "@/components/RequestModal";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { CookieBanner } from "@/components/CookieBanner";
 
 function NotFoundComponent() {
   return (
