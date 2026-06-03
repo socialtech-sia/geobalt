@@ -116,11 +116,13 @@ function Hero() {
           <div className="relative w-[460px] h-[460px] rounded-[32px] bg-gradient-to-br from-accent/15 via-white/5 to-white/[0.02] border border-white/10 flex items-center justify-center overflow-hidden shadow-2xl">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(232,93,58,0.18),transparent_55%)]" />
             {slide && imagesMap[slide.id] ? (
-              <img
-                src={imagesMap[slide.id]}
-                alt={slide.name}
-                className="relative z-[1] max-w-[82%] max-h-[82%] object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.55)]"
-              />
+              <div className="relative z-[1] w-[82%] h-[82%] rounded-2xl border border-white/15 bg-white/95 p-4 shadow-[0_25px_45px_rgba(0,0,0,0.55)] overflow-hidden flex items-center justify-center">
+                <img
+                  src={imagesMap[slide.id]}
+                  alt={slide.name}
+                  className="max-w-full max-h-full object-contain"
+                />
+              </div>
             ) : (
               <div className="relative z-[1] w-64 h-64 rounded-2xl bg-white/[0.03] backdrop-blur border border-white/10 flex items-center justify-center">
                 <Crosshair size={130} strokeWidth={1} className="text-accent" />
