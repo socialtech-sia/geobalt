@@ -37,29 +37,29 @@ function CategoriesPage() {
   const reorder = async (next: Cat[]) => {
     qc.setQueryData(["admin", "categories"], next);
     await persistOrder("categories", next.map((c) => c.id), supabase);
-    toast.success("Порядок сохранён");
+    toast.success("Secība saglabāta");
     qc.invalidateQueries({ queryKey: ["admin", "categories"] });
   };
 
   const remove = async (cat: Cat) => {
     const { error } = await supabase.from("categories").delete().eq("id", cat.id);
-    if (error) return toast.error("Ошибка: " + error.message);
-    toast.success("Категория удалена");
+    if (error) return toast.error("Kļūda: " + error.message);
+    toast.success("Kategorija удалена");
     qc.invalidateQueries({ queryKey: ["admin", "categories"] });
   };
 
   return (
     <div className="space-y-6 max-w-4xl">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold text-ink">Категории</h1>
+        <h1 className="font-display text-2xl font-bold text-ink">Kategorijas</h1>
         <button onClick={() => setEditing({ name_lv: "", slug: "", description_lv: "", icon: "", sort_order: cats.length })} className="rounded-md bg-accent text-white text-sm font-medium px-3 py-2 hover:bg-accent-d flex items-center gap-1.5">
-          <Plus className="h-4 w-4" /> Новая категория
+          <Plus className="h-4 w-4" /> Jauna kategorija
         </button>
       </div>
 
       <div className="rounded-xl bg-card border border-line overflow-hidden">
         <div className="grid grid-cols-[40px_1fr_1fr_80px_60px_120px] gap-2 px-3 py-2 bg-paper-2 text-xs font-mono uppercase text-muted">
-          <span></span><span>Название</span><span>Slug</span><span>Продукты</span><span>Поряд.</span><span>Действия</span>
+          <span></span><span>Nosaukums</span><span>Slug</span><span>Produkti</span><span>Sec.</span><span>Darbības</span>
         </div>
         <SortableList
           items={cats}
@@ -76,14 +76,14 @@ function CategoriesPage() {
                 <ConfirmDelete
                   trigger={<button className="p-1.5 text-muted hover:text-red-600"><Trash2 className="h-4 w-4" /></button>}
                   disabled={(counts[cat.id] ?? 0) > 0}
-                  disabledReason={`В категории ${counts[cat.id]} продуктов. Переназначьте их перед удалением.`}
+                  disabledReason={`Kategorijā ${counts[cat.id]} produkti. Pārvietojiet tos pirms dzēšanas.`}
                   onConfirm={async () => { await remove(cat); }}
                 />
               </div>
             </div>
           )}
         />
-        {cats.length === 0 && <div className="p-8 text-center text-muted text-sm">Пусто</div>}
+        {cats.length === 0 && <div className="p-8 text-center text-muted text-sm">Tukšs</div>}
       </div>
 
       {editing && <Editor initial={editing} onClose={() => setEditing(null)} />}
@@ -105,7 +105,7 @@ function Editor({ initial, onClose }: { initial: Partial<Cat>; onClose: () => vo
 
   const save = useMutation({
     mutationFn: async (data: Partial<Cat>) => {
-      if (!data.name_lv || !data.slug) throw new Error("Заполните название и slug");
+      if (!data.name_lv || !data.slug) throw new Error("Aizpildiet nosaukumu un slug");
       const payload = {
         name_lv: data.name_lv,
         slug: data.slug,
@@ -122,7 +122,7 @@ function Editor({ initial, onClose }: { initial: Partial<Cat>; onClose: () => vo
       }
     },
     onSuccess: () => {
-      toast.success("Сохранено");
+      toast.success("Saglabāts");
       qc.invalidateQueries({ queryKey: ["admin", "categories"] });
       onClose();
     },
@@ -130,7 +130,7 @@ function Editor({ initial, onClose }: { initial: Partial<Cat>; onClose: () => vo
   });
 
   const handleClose = () => {
-    if (dirty && !confirm("Есть несохранённые изменения. Закрыть?")) return;
+    if (dirty && !confirm("Ir nesaglabātas izmaiņas. Aizvērt?")) return;
     onClose();
   };
 
@@ -140,19 +140,19 @@ function Editor({ initial, onClose }: { initial: Partial<Cat>; onClose: () => vo
     <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={handleClose}>
       <div className="bg-card rounded-xl border border-line max-w-lg w-full p-6 space-y-4" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between">
-          <h2 className="font-display text-xl font-bold">{initial.id ? "Редактировать категорию" : "Новая категория"}</h2>
+          <h2 className="font-display text-xl font-bold">{initial.id ? "Rediģēt kategoriju" : "Jauna kategorija"}</h2>
           <button onClick={handleClose}><X className="h-5 w-5 text-muted" /></button>
         </div>
-        <Field label="Название (LV)"><input className={inputCls} value={form.name_lv ?? ""} onChange={(e) => set("name_lv", e.target.value)} /></Field>
+        <Field label="Nosaukums (LV)"><input className={inputCls} value={form.name_lv ?? ""} onChange={(e) => set("name_lv", e.target.value)} /></Field>
         <Field label="Slug"><input className={inputCls + " font-mono text-xs"} value={form.slug ?? ""} onChange={(e) => { set("slug", e.target.value); setSlugTouched(true); }} /></Field>
-        <Field label="Описание (LV)"><textarea rows={3} className={inputCls} value={form.description_lv ?? ""} onChange={(e) => set("description_lv", e.target.value)} /></Field>
+        <Field label="Apraksts (LV)"><textarea rows={3} className={inputCls} value={form.description_lv ?? ""} onChange={(e) => set("description_lv", e.target.value)} /></Field>
         <div className="grid grid-cols-2 gap-3">
-          <Field label="Иконка (lucide)"><input className={inputCls + " font-mono text-xs"} placeholder="Crosshair" value={form.icon ?? ""} onChange={(e) => set("icon", e.target.value)} /></Field>
-          <Field label="Порядок"><input type="number" className={inputCls} value={form.sort_order ?? 0} onChange={(e) => set("sort_order", parseInt(e.target.value) || 0)} /></Field>
+          <Field label="Ikona (lucide)"><input className={inputCls + " font-mono text-xs"} placeholder="Crosshair" value={form.icon ?? ""} onChange={(e) => set("icon", e.target.value)} /></Field>
+          <Field label="Secība"><input type="number" className={inputCls} value={form.sort_order ?? 0} onChange={(e) => set("sort_order", parseInt(e.target.value) || 0)} /></Field>
         </div>
         <div className="flex justify-end gap-2 pt-2">
-          <button onClick={handleClose} className="rounded-md border border-line px-3 py-2 text-sm">Отмена</button>
-          <button onClick={() => save.mutate(form)} disabled={save.isPending} className="rounded-md bg-accent text-white px-3 py-2 text-sm font-medium disabled:opacity-50">{save.isPending ? "Сохранение…" : "Сохранить"}</button>
+          <button onClick={handleClose} className="rounded-md border border-line px-3 py-2 text-sm">Atcelt</button>
+          <button onClick={() => save.mutate(form)} disabled={save.isPending} className="rounded-md bg-accent text-white px-3 py-2 text-sm font-medium disabled:opacity-50">{save.isPending ? "Saglabā…" : "Saglabāt"}</button>
         </div>
       </div>
     </div>

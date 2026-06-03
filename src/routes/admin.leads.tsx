@@ -9,10 +9,10 @@ export const Route = createFileRoute("/admin/leads")({
 });
 
 const STATUSES = [
-  { value: "new", label: "Новая" },
-  { value: "in_progress", label: "В работе" },
-  { value: "won", label: "Выиграна" },
-  { value: "lost", label: "Проиграна" },
+  { value: "new", label: "Jauns" },
+  { value: "in_progress", label: "Procesā" },
+  { value: "won", label: "Iegūts" },
+  { value: "lost", label: "Zaudēts" },
 ];
 
 function StatusBadge({ status }: { status: string }) {
@@ -69,9 +69,9 @@ function LeadsPage() {
   });
 
   const exportCsv = () => {
-    const header = ["Дата", "Имя", "Компания", "Email", "Телефон", "Продукт", "Сообщение", "Статус", "Источник"];
+    const header = ["Datums", "Vārds", "Uzņēmums", "Email", "Tālrunis", "Produkts", "Ziņojums", "Statuss", "Avots"];
     const rows = filtered.map((l) => [
-      new Date(l.created_at).toLocaleString("ru"),
+      new Date(l.created_at).toLocaleString("lv"),
       l.full_name, l.company ?? "", l.email, l.phone, l.product_name ?? "",
       (l.message ?? "").replace(/[\n\r]/g, " "), l.status, l.source_page ?? "",
     ]);
@@ -88,9 +88,9 @@ function LeadsPage() {
   return (
     <div className="space-y-4 max-w-7xl">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold text-ink">Заявки</h1>
+        <h1 className="font-display text-2xl font-bold text-ink">Pieprasījumi</h1>
         <button onClick={exportCsv} className="rounded-md bg-card border border-line text-sm text-ink px-3 py-2 flex items-center gap-1.5 hover:bg-paper">
-          <Download className="h-4 w-4" /> Экспорт CSV
+          <Download className="h-4 w-4" /> Eksportēt CSV
         </button>
       </div>
 
@@ -98,14 +98,14 @@ function LeadsPage() {
         <div className="relative flex-1 max-w-md">
           <Search className="h-4 w-4 text-muted absolute left-3 top-1/2 -translate-y-1/2" />
           <input
-            placeholder="Поиск по имени, email, телефону…"
+            placeholder="Meklēt pēc vārda, e-pasta, tālruņa…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-md border border-line bg-card pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
         <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-md border border-line bg-card px-3 py-2 text-sm">
-          <option value="all">Все статусы</option>
+          <option value="all">Visi statusi</option>
           {STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
         </select>
       </div>
@@ -114,12 +114,12 @@ function LeadsPage() {
         <table className="w-full text-sm">
           <thead className="bg-paper-2 text-xs uppercase text-muted">
             <tr>
-              <th className="text-left px-4 py-2">Дата</th>
-              <th className="text-left px-4 py-2">Имя</th>
-              <th className="text-left px-4 py-2">Компания</th>
-              <th className="text-left px-4 py-2">Контакты</th>
-              <th className="text-left px-4 py-2">Продукт</th>
-              <th className="text-left px-4 py-2">Статус</th>
+              <th className="text-left px-4 py-2">Datums</th>
+              <th className="text-left px-4 py-2">Vārds</th>
+              <th className="text-left px-4 py-2">Uzņēmums</th>
+              <th className="text-left px-4 py-2">Kontakti</th>
+              <th className="text-left px-4 py-2">Produkts</th>
+              <th className="text-left px-4 py-2">Statuss</th>
               <th className="text-right px-4 py-2"></th>
             </tr>
           </thead>
@@ -130,21 +130,21 @@ function LeadsPage() {
                 <td className="px-4 py-3 text-ink font-medium">{l.full_name}</td>
                 <td className="px-4 py-3 text-muted">{l.company ?? "—"}</td>
                 <td className="px-4 py-3 text-xs text-muted">{l.email}<br/>{l.phone}</td>
-                <td className="px-4 py-3 text-muted text-xs">{l.product_name ?? "Общий вопрос"}</td>
+                <td className="px-4 py-3 text-muted text-xs">{l.product_name ?? "Vispārīgs jautājums"}</td>
                 <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                   <select value={l.status} onChange={(e) => updateStatus.mutate({ id: l.id, status: e.target.value })} className="text-xs border border-line bg-card rounded px-2 py-1">
                     {STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                   </select>
                 </td>
                 <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
-                  <button onClick={() => { if (confirm("Удалить заявку?")) removeLead.mutate(l.id); }} className="p-1.5 text-muted hover:text-red-600">
+                  <button onClick={() => { if (confirm("Dzēst pieprasījumu?")) removeLead.mutate(l.id); }} className="p-1.5 text-muted hover:text-red-600">
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </td>
               </tr>
             ))}
             {filtered.length === 0 && (
-              <tr><td colSpan={7} className="px-5 py-12 text-center text-muted text-sm">Нет заявок</td></tr>
+              <tr><td colSpan={7} className="px-5 py-12 text-center text-muted text-sm">Nav pieprasījumu</td></tr>
             )}
           </tbody>
         </table>
@@ -191,30 +191,30 @@ function LeadDrawer({ lead, onClose }: { lead: any; onClose: () => void }) {
         </div>
         <div className="p-5 space-y-4">
           <StatusBadge status={lead.status} />
-          <Row k="Email"><a href={`mailto:${lead.email}?subject=${encodeURIComponent("Re: " + (lead.product_name ?? "запрос"))}`} className="text-accent hover:underline">{lead.email}</a></Row>
-          <Row k="Телефон"><a href={`tel:${lead.phone}`} className="text-accent hover:underline">{lead.phone}</a></Row>
-          {lead.company && <Row k="Компания">{lead.company}</Row>}
-          <Row k="Продукт">{lead.product_name ?? "Общий вопрос"}</Row>
-          {lead.message && <Row k="Сообщение"><div className="text-sm text-ink whitespace-pre-wrap">{lead.message}</div></Row>}
-          <Row k="GDPR">{lead.gdpr_consent ? "Согласие получено" : "Нет"}</Row>
-          <Row k="Источник"><span className="font-mono text-xs">{lead.source_page ?? "—"}</span></Row>
-          <Row k="Дата">{new Date(lead.created_at).toLocaleString("ru")}</Row>
+          <Row k="Email"><a href={`mailto:${lead.email}?subject=${encodeURIComponent("Re: " + (lead.product_name ?? "pieprasījums"))}`} className="text-accent hover:underline">{lead.email}</a></Row>
+          <Row k="Tālrunis"><a href={`tel:${lead.phone}`} className="text-accent hover:underline">{lead.phone}</a></Row>
+          {lead.company && <Row k="Uzņēmums">{lead.company}</Row>}
+          <Row k="Produkts">{lead.product_name ?? "Vispārīgs jautājums"}</Row>
+          {lead.message && <Row k="Ziņojums"><div className="text-sm text-ink whitespace-pre-wrap">{lead.message}</div></Row>}
+          <Row k="GDPR">{lead.gdpr_consent ? "Piekrišana saņemta" : "Nē"}</Row>
+          <Row k="Avots"><span className="font-mono text-xs">{lead.source_page ?? "—"}</span></Row>
+          <Row k="Datums">{new Date(lead.created_at).toLocaleString("lv")}</Row>
 
           <div className="pt-4 border-t border-line">
-            <h3 className="font-display font-bold text-ink mb-3">Заметки</h3>
+            <h3 className="font-display font-bold text-ink mb-3">Piezīmes</h3>
             <div className="space-y-2 mb-3">
               {notes.map((n: any) => (
                 <div key={n.id} className="rounded-md bg-card border border-line p-3">
                   <div className="text-sm text-ink whitespace-pre-wrap">{n.note}</div>
                   <div className="text-xs text-muted mt-1 font-mono">
-                    {n.author_name ?? "—"} · {new Date(n.created_at).toLocaleString("ru")}
+                    {n.author_name ?? "—"} · {new Date(n.created_at).toLocaleString("lv")}
                   </div>
                 </div>
               ))}
-              {notes.length === 0 && <p className="text-xs text-muted">Заметок пока нет</p>}
+              {notes.length === 0 && <p className="text-xs text-muted">Vēl nav piezīmju</p>}
             </div>
             <div className="flex gap-2">
-              <textarea value={noteText} onChange={(e) => setNoteText(e.target.value)} rows={2} placeholder="Добавить заметку…"
+              <textarea value={noteText} onChange={(e) => setNoteText(e.target.value)} rows={2} placeholder="Pievienot piezīmi…"
                 className="flex-1 rounded-md border border-line bg-card px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
               <button onClick={() => noteText.trim() && addNote.mutate(noteText.trim())}
                 className="rounded-md bg-accent text-white px-3 self-start py-2 hover:bg-accent-d">

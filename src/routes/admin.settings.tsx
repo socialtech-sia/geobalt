@@ -68,12 +68,12 @@ function SettingsPage() {
       if (error) throw error;
     },
     onSuccess: () => {
-      setStatus("Сохранено");
+      setStatus("Saglabāts");
       setTimeout(() => setStatus(null), 2000);
       qc.invalidateQueries({ queryKey: ["admin", "settings"] });
       qc.invalidateQueries({ queryKey: ["settings"] });
     },
-    onError: (e: any) => setStatus("Ошибка: " + e.message),
+    onError: (e: any) => setStatus("Kļūda: " + e.message),
   });
 
   const handleUpload = async (file: File) => {
@@ -89,28 +89,28 @@ function SettingsPage() {
   const addEmail = () => {
     if (!newEmail.trim() || !form) return;
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newEmail)) {
-      alert("Неверный email");
+      alert("Nepareizs e-pasts");
       return;
     }
     setForm({ ...form, notification_emails: [...form.notification_emails, newEmail.trim()] });
     setNewEmail("");
   };
 
-  if (!form) return <div className="text-muted text-sm">Загрузка…</div>;
+  if (!form) return <div className="text-muted text-sm">Ielādē…</div>;
 
   return (
     <div className="space-y-6 max-w-3xl">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold text-ink">Настройки</h1>
+        <h1 className="font-display text-2xl font-bold text-ink">Iestatījumi</h1>
         <div className="flex items-center gap-3">
           {status && <span className="text-sm text-green">{status}</span>}
           <button onClick={() => save.mutate(form)} disabled={save.isPending} className="rounded-md bg-accent text-white text-sm font-medium px-3 py-2 hover:bg-accent-d disabled:opacity-50">
-            {save.isPending ? "Сохранение…" : "Сохранить"}
+            {save.isPending ? "Saglabā…" : "Saglabāt"}
           </button>
         </div>
       </div>
 
-      <Section title="Email-получатели заявок" desc="Кому отправлять уведомления о новых заявках. Edge-функция читает этот список.">
+      <Section title="Pieprasījumu e-pasta saņēmēji" desc="Kam sūtīt paziņojumus par jaunajiem pieprasījumiem. Edge funkcija lasa šo sarakstu.">
         <div className="flex flex-wrap gap-2 mb-3">
           {form.notification_emails.map((e, i) => (
             <span key={i} className="inline-flex items-center gap-1.5 rounded-full bg-paper-2 border border-line px-3 py-1 text-sm">
@@ -120,45 +120,45 @@ function SettingsPage() {
               </button>
             </span>
           ))}
-          {form.notification_emails.length === 0 && <span className="text-muted text-sm">Пусто</span>}
+          {form.notification_emails.length === 0 && <span className="text-muted text-sm">Tukšs</span>}
         </div>
         <div className="flex gap-2">
           <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addEmail())} placeholder="manager@geobalt.lv" className={inputCls + " flex-1"} />
-          <button onClick={addEmail} className="rounded-md bg-card border border-line px-3 py-2 text-sm hover:bg-paper flex items-center gap-1"><Plus className="h-4 w-4" />Добавить</button>
+          <button onClick={addEmail} className="rounded-md bg-card border border-line px-3 py-2 text-sm hover:bg-paper flex items-center gap-1"><Plus className="h-4 w-4" />Pievienot</button>
         </div>
-        <Toggle className="mt-4" label="Отправлять авто-ответ клиенту" value={form.send_lead_autoreply} onChange={(v) => setForm({ ...form, send_lead_autoreply: v })} />
+        <Toggle className="mt-4" label="Sūtīt auto-atbildi klientam" value={form.send_lead_autoreply} onChange={(v) => setForm({ ...form, send_lead_autoreply: v })} />
       </Section>
 
-      <Section title="Контакты сайта" desc="Отображаются в шапке, футере и на странице контактов.">
+      <Section title="Vietnes kontakti" desc="Tiek attēloti galvenē, kājenē un kontaktu lapā.">
         <div className="grid grid-cols-2 gap-4">
-          <Field label="Телефон"><input className={inputCls} value={form.contact_phone} onChange={(e) => setForm({ ...form, contact_phone: e.target.value })} /></Field>
+          <Field label="Tālrunis"><input className={inputCls} value={form.contact_phone} onChange={(e) => setForm({ ...form, contact_phone: e.target.value })} /></Field>
           <Field label="Email"><input className={inputCls} value={form.contact_email} onChange={(e) => setForm({ ...form, contact_email: e.target.value })} /></Field>
-          <Field label="Адрес (LV)" className="col-span-2"><input className={inputCls} value={form.contact_address_lv} onChange={(e) => setForm({ ...form, contact_address_lv: e.target.value })} /></Field>
-          <Field label="Часы работы (LV)" className="col-span-2"><input className={inputCls} value={form.working_hours_lv} onChange={(e) => setForm({ ...form, working_hours_lv: e.target.value })} /></Field>
+          <Field label="Adrese (LV)" className="col-span-2"><input className={inputCls} value={form.contact_address_lv} onChange={(e) => setForm({ ...form, contact_address_lv: e.target.value })} /></Field>
+          <Field label="Darba laiks (LV)" className="col-span-2"><input className={inputCls} value={form.working_hours_lv} onChange={(e) => setForm({ ...form, working_hours_lv: e.target.value })} /></Field>
         </div>
       </Section>
 
-      <Section title="Промо-баннер на главной">
-        <Toggle label="Включить баннер" value={form.promo_enabled} onChange={(v) => setForm({ ...form, promo_enabled: v })} />
+      <Section title="Promo baneris sākumlapā">
+        <Toggle label="Ieslēgt baneri" value={form.promo_enabled} onChange={(v) => setForm({ ...form, promo_enabled: v })} />
         <div className="grid grid-cols-2 gap-4 mt-3">
-          <Field label="Заголовок (LV)"><input className={inputCls} value={form.promo_title_lv} onChange={(e) => setForm({ ...form, promo_title_lv: e.target.value })} /></Field>
+          <Field label="Virsraksts (LV)"><input className={inputCls} value={form.promo_title_lv} onChange={(e) => setForm({ ...form, promo_title_lv: e.target.value })} /></Field>
           <Field label="CTA URL"><input className={inputCls + " font-mono text-xs"} value={form.promo_cta_url} onChange={(e) => setForm({ ...form, promo_cta_url: e.target.value })} /></Field>
-          <Field label="Текст (LV)" className="col-span-2"><textarea rows={2} className={inputCls} value={form.promo_text_lv} onChange={(e) => setForm({ ...form, promo_text_lv: e.target.value })} /></Field>
-          <Field label="Изображение" className="col-span-2">
+          <Field label="Teksts (LV)" className="col-span-2"><textarea rows={2} className={inputCls} value={form.promo_text_lv} onChange={(e) => setForm({ ...form, promo_text_lv: e.target.value })} /></Field>
+          <Field label="Attēls" className="col-span-2">
             {form.promo_image_url && <img src={form.promo_image_url} alt="" className="h-32 rounded border border-line mb-2 object-cover" />}
             <label className="inline-flex items-center gap-2 rounded-md bg-card border border-line px-3 py-2 text-sm cursor-pointer hover:bg-paper">
-              <Upload className="h-4 w-4" /> {uploading ? "Загрузка…" : "Загрузить"}
+              <Upload className="h-4 w-4" /> {uploading ? "Ielādē…" : "Augšupielādēt"}
               <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0])} />
             </label>
           </Field>
         </div>
       </Section>
 
-      <Section title="Видимость разделов сайта">
+      <Section title="Sadaļu redzamība vietnē">
         <div className="grid grid-cols-3 gap-3">
-          <Toggle label="Показывать блог" value={form.show_blog} onChange={(v) => setForm({ ...form, show_blog: v })} />
-          <Toggle label="Показывать отзывы" value={form.show_reviews} onChange={(v) => setForm({ ...form, show_reviews: v })} />
-          <Toggle label="Показывать аренду" value={form.show_rent} onChange={(v) => setForm({ ...form, show_rent: v })} />
+          <Toggle label="Rādīt blogu" value={form.show_blog} onChange={(v) => setForm({ ...form, show_blog: v })} />
+          <Toggle label="Rādīt atsauksmes" value={form.show_reviews} onChange={(v) => setForm({ ...form, show_reviews: v })} />
+          <Toggle label="Rādīt nomu" value={form.show_rent} onChange={(v) => setForm({ ...form, show_rent: v })} />
         </div>
       </Section>
     </div>

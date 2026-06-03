@@ -13,8 +13,8 @@ import {
 
 export function ConfirmDelete({
   trigger,
-  title = "Удалить запись?",
-  description = "Это действие необратимо.",
+  title = "Dzēst ierakstu?",
+  description = "Šī darbība ir neatgriezeniska.",
   onConfirm,
   disabled,
   disabledReason,
@@ -34,11 +34,11 @@ export function ConfirmDelete({
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>
-            {disabled ? disabledReason ?? "Удаление недоступно." : description}
+            {disabled ? disabledReason ?? "Dzēšana nav pieejama." : description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Отмена</AlertDialogCancel>
+          <AlertDialogCancel>Atcelt</AlertDialogCancel>
           {!disabled && (
             <AlertDialogAction
               className="bg-red-600 hover:bg-red-700 text-white"
@@ -47,7 +47,7 @@ export function ConfirmDelete({
                 setOpen(false);
               }}
             >
-              Удалить
+              Dzēst
             </AlertDialogAction>
           )}
         </AlertDialogFooter>

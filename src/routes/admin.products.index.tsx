@@ -58,9 +58,9 @@ function ProductsListPage() {
   return (
     <div className="space-y-4 max-w-7xl">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold text-ink">Продукты</h1>
+        <h1 className="font-display text-2xl font-bold text-ink">Produkti</h1>
         <Link to="/admin/products/$id" params={{ id: "new" }} className="rounded-md bg-accent text-white text-sm font-medium px-3 py-2 flex items-center gap-1.5 hover:bg-accent-d">
-          <Plus className="h-4 w-4" /> Добавить продукт
+          <Plus className="h-4 w-4" /> Pievienot produktu
         </Link>
       </div>
 
@@ -68,7 +68,7 @@ function ProductsListPage() {
         <div className="relative flex-1 max-w-md">
           <Search className="h-4 w-4 text-muted absolute left-3 top-1/2 -translate-y-1/2" />
           <input
-            placeholder="Поиск по названию…"
+            placeholder="Meklēt pēc nosaukuma…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-md border border-line bg-card pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
@@ -79,9 +79,9 @@ function ProductsListPage() {
           onChange={(e) => setFilterStatus(e.target.value as "all" | "active" | "hidden")}
           className="rounded-md border border-line bg-card px-3 py-2 text-sm"
         >
-          <option value="all">Все статусы</option>
-          <option value="active">Активные</option>
-          <option value="hidden">Скрытые</option>
+          <option value="all">Visi statusi</option>
+          <option value="active">Aktīvie</option>
+          <option value="hidden">Slēptie</option>
         </select>
       </div>
 
@@ -89,14 +89,14 @@ function ProductsListPage() {
         <table className="w-full text-sm">
           <thead className="bg-paper-2 text-xs uppercase text-muted">
             <tr>
-              <th className="text-left px-4 py-2 w-16">Фото</th>
-              <th className="text-left px-4 py-2">Название</th>
-              <th className="text-left px-4 py-2">Бренд</th>
-              <th className="text-left px-4 py-2">Категория</th>
-              <th className="text-left px-4 py-2 font-mono">Точн./IP</th>
-              <th className="text-center px-4 py-2">Активен</th>
+              <th className="text-left px-4 py-2 w-16">Foto</th>
+              <th className="text-left px-4 py-2">Nosaukums</th>
+              <th className="text-left px-4 py-2">Zīmols</th>
+              <th className="text-left px-4 py-2">Kategorija</th>
+              <th className="text-left px-4 py-2 font-mono">Prec./IP</th>
+              <th className="text-center px-4 py-2">Aktīvs</th>
               <th className="text-center px-4 py-2">Поп.</th>
-              <th className="text-right px-4 py-2">Действия</th>
+              <th className="text-right px-4 py-2">Darbības</th>
             </tr>
           </thead>
           <tbody>
@@ -124,7 +124,7 @@ function ProductsListPage() {
                     <button
                       onClick={() => toggleActive.mutate({ id: p.id, value: !p.is_active })}
                       className="text-muted hover:text-ink"
-                      title={p.is_active ? "Скрыть" : "Активировать"}
+                      title={p.is_active ? "Slēpt" : "Aktivizēt"}
                     >
                       {p.is_active ? <Eye className="h-4 w-4 text-green" /> : <EyeOff className="h-4 w-4" />}
                     </button>
@@ -147,7 +147,7 @@ function ProductsListPage() {
                     </Link>
                     <button
                       onClick={() => {
-                        if (confirm(`Удалить продукт "${p.name}"?`)) remove.mutate(p.id);
+                        if (confirm(`Dzēst produktu "${p.name}"?`)) remove.mutate(p.id);
                       }}
                       className="inline-flex p-1.5 rounded hover:bg-red-50 text-muted hover:text-red-600"
                     >
@@ -158,7 +158,7 @@ function ProductsListPage() {
               );
             })}
             {filtered.length === 0 && (
-              <tr><td colSpan={8} className="px-5 py-12 text-center text-muted text-sm">Нет продуктов</td></tr>
+              <tr><td colSpan={8} className="px-5 py-12 text-center text-muted text-sm">Nav produktu</td></tr>
             )}
           </tbody>
         </table>
