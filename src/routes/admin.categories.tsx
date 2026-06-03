@@ -77,7 +77,7 @@ function CategoriesPage() {
                   trigger={<button className="p-1.5 text-muted hover:text-red-600"><Trash2 className="h-4 w-4" /></button>}
                   disabled={(counts[cat.id] ?? 0) > 0}
                   disabledReason={`В категории ${counts[cat.id]} продуктов. Переназначьте их перед удалением.`}
-                  onConfirm={() => remove(cat)}
+                  onConfirm={async () => { await remove(cat); }}
                 />
               </div>
             </div>
