@@ -8,12 +8,15 @@ import { lv } from "@/lib/i18n";
 import type { BlogPost } from "@/lib/types";
 
 export const Route = createFileRoute("/blogs/$slug")({
-  head: ({ params, loaderData }) => ({
-    meta: [
-      { title: `${(loaderData as BlogPost | null)?.title_lv ?? params.slug} | geobalt.lv blogs` },
-      { name: "description", content: (loaderData as BlogPost | null)?.excerpt_lv ?? "" },
-    ],
-  }),
+  head: ({ params, loaderData }) => {
+    const post = (loaderData ?? null) as BlogPost | null;
+    return {
+      meta: [
+        { title: `${post?.title_lv ?? params.slug} | geobalt.lv blogs` },
+        { name: "description", content: post?.excerpt_lv ?? "" },
+      ],
+    };
+  },
   loader: async ({ params }) => {
     const { data } = await supabase
       .from("blog_posts")
