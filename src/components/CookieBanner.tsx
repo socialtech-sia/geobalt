@@ -81,7 +81,7 @@ export function CookieBanner() {
         </div>
 
         {/* Actions */}
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="flex flex-nowrap gap-2 mt-4">
           <button onClick={acceptAll} className="btn-accent text-xs py-2 px-4">
             Piekrītu visām
           </button>
