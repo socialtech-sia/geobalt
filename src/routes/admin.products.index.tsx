@@ -95,7 +95,7 @@ function ProductsListPage() {
               <th className="text-left px-4 py-2">Kategorija</th>
               <th className="text-left px-4 py-2 font-mono">Prec./IP</th>
               <th className="text-center px-4 py-2">Aktīvs</th>
-              <th className="text-center px-4 py-2">Поп.</th>
+              <th className="text-center px-4 py-2">Pop.</th>
               <th className="text-right px-4 py-2">Darbības</th>
             </tr>
           </thead>

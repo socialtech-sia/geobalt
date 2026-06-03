@@ -44,7 +44,7 @@ function CategoriesPage() {
   const remove = async (cat: Cat) => {
     const { error } = await supabase.from("categories").delete().eq("id", cat.id);
     if (error) return toast.error("Kļūda: " + error.message);
-    toast.success("Kategorija удалена");
+    toast.success("Kategorija dzēsta");
     qc.invalidateQueries({ queryKey: ["admin", "categories"] });
   };
 

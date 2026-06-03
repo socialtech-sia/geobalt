@@ -35,7 +35,7 @@ function BrandsPage() {
   const remove = async (b: Brand) => {
     const { error } = await supabase.from("brands").delete().eq("id", b.id);
     if (error) return toast.error("Kļūda: " + error.message);
-    toast.success("Zīmols удалён");
+    toast.success("Zīmols dzēsts");
     qc.invalidateQueries({ queryKey: ["admin", "brands"] });
   };
 
