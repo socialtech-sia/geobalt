@@ -17,6 +17,7 @@ import { RequestModal } from "@/components/RequestModal";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
