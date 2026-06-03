@@ -7,6 +7,7 @@ import { lv } from "@/lib/i18n";
 import { ProductCard } from "@/components/ProductCard";
 import { useRequestModal } from "@/components/request-modal-context";
 import { useSiteSettings } from "@/lib/useSiteSettings";
+import { useProductImages } from "@/lib/useProductImages";
 import type { Product, Review, BlogPost, Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/")({
