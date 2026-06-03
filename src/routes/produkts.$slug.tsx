@@ -58,10 +58,27 @@ function ProductPage() {
     },
   });
 
+  const { data: gallery = [] } = useQuery({
+    queryKey: ["product-gallery", product?.id],
+    enabled: !!product?.id,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("product_images")
+        .select("url, is_primary, sort_order")
+        .eq("product_id", product!.id)
+        .order("is_primary", { ascending: false })
+        .order("sort_order", { ascending: true });
+      return (data ?? []) as { url: string; is_primary: boolean; sort_order: number }[];
+    },
+  });
+
   const [tab, setTab] = useState<"desc" | "specs" | "set">("desc");
+  const [activeImg, setActiveImg] = useState(0);
 
   if (isLoading) return <div className="max-w-7xl mx-auto px-6 py-20 text-muted">Ielādē…</div>;
   if (!product) throw notFound();
+
+  const { data: relatedImages = {} } = useProductImages(related.map((p) => p.id));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 pb-32 lg:pb-10">
@@ -81,17 +98,28 @@ function ProductPage() {
       <div className="grid lg:grid-cols-2 gap-12">
         {/* Gallery */}
         <div>
-          <div className="aspect-square bg-card border border-line rounded-2xl flex items-center justify-center">
-            <Satellite size={180} strokeWidth={0.8} className="text-ink/25" />
+          <div className="aspect-square bg-card border border-line rounded-2xl flex items-center justify-center overflow-hidden">
+            {gallery.length > 0 ? (
+              <img src={gallery[activeImg]?.url ?? gallery[0].url} alt={product.name} className="w-full h-full object-cover" />
+            ) : (
+              <Satellite size={180} strokeWidth={0.8} className="text-ink/25" />
+            )}
           </div>
-          <div className="grid grid-cols-4 gap-3 mt-3">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className={`aspect-square bg-card border rounded-lg flex items-center justify-center ${i === 0 ? "border-accent" : "border-line"}`}>
-                <Satellite size={32} strokeWidth={1} className="text-ink/30" />
-              </div>
-            ))}
-          </div>
+          {gallery.length > 1 && (
+            <div className="grid grid-cols-4 gap-3 mt-3">
+              {gallery.slice(0, 8).map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveImg(i)}
+                  className={`aspect-square bg-card border rounded-lg overflow-hidden ${i === activeImg ? "border-accent" : "border-line"}`}
+                >
+                  <img src={img.url} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
+
 
         {/* Info */}
         <div>
