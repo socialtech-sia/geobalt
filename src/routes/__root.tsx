@@ -104,6 +104,7 @@ function RootComponent() {
         </div>
         <RequestModal />
         <CookieBanner />
+        <Toaster />
       </RequestModalProvider>
     </QueryClientProvider>
   );
