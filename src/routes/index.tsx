@@ -20,15 +20,16 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const { data: settings } = useSiteSettings();
   return (
     <>
       <Hero />
       <Industries />
       <Popular />
       <Promo />
-      <Reviews />
+      {(settings?.show_reviews ?? true) && <Reviews />}
       <Brands />
-      <BlogPreview />
+      {(settings?.show_blog ?? true) && <BlogPreview />}
     </>
   );
 }
