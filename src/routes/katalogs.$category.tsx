@@ -8,6 +8,10 @@ import { useProductImages } from "@/lib/useProductImages";
 import type { Product, Category, Brand } from "@/lib/types";
 
 export const Route = createFileRoute("/katalogs/$category")({
+  validateSearch: (s: Record<string, unknown>) => ({
+    industry: typeof s.industry === "string" ? s.industry : undefined,
+    sub: typeof s.sub === "string" ? s.sub : undefined,
+  }),
   head: ({ params }) => ({
     meta: [
       { title: `${CATEGORY_NAV.find((c) => c.slug === params.category)?.label ?? "Katalogs"} | geobalt.lv` },
@@ -19,6 +23,8 @@ export const Route = createFileRoute("/katalogs/$category")({
 
 function CatalogPage() {
   const { category } = Route.useParams();
+  const search = Route.useSearch() as { industry?: string };
+  const initialIndustry = search.industry;
 
   const { data: cat } = useQuery({
     queryKey: ["category", category],
@@ -50,7 +56,7 @@ function CatalogPage() {
   const { data: imagesMap = {} } = useProductImages(products.map((p) => p.id));
 
   // filters
-  const [industries, setIndustries] = useState<string[]>([]);
+  const [industries, setIndustries] = useState<string[]>(initialIndustry ? [initialIndustry] : []);
   const [brandIds, setBrandIds] = useState<string[]>([]);
   const [ip, setIp] = useState<string[]>([]);
   const [avail, setAvail] = useState<string[]>([]);
