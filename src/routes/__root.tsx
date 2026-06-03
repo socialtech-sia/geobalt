@@ -89,6 +89,7 @@ function RootComponent() {
           <Footer />
         </div>
         <RequestModal />
+        <CookieBanner />
       </RequestModalProvider>
     </QueryClientProvider>
   );
