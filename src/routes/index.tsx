@@ -225,10 +225,10 @@ function Popular() {
 
 function Promo() {
   const { data: settings } = useSiteSettings();
+  const [open, setOpen] = useState(false);
   if (!settings?.promo_enabled) return null;
   const title = settings.promo_title_lv || lv.home.promo.title;
   const text = settings.promo_text_lv || lv.home.promo.desc;
-  const cta = settings.promo_cta_url || "/katalogs/gnss";
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="rounded-2xl bg-amber-soft border border-line p-8 md:p-10 grid md:grid-cols-3 gap-6 items-center">
@@ -242,14 +242,15 @@ function Promo() {
         <div className="md:col-span-1">
           <div className="kicker mb-2">{lv.home.promo.kicker}</div>
           <h3 className="text-2xl md:text-3xl">{title}</h3>
-          <p className="text-muted mt-3 text-sm">{text}</p>
+          <p className="text-muted mt-3 text-sm line-clamp-3">{text}</p>
         </div>
         <div className="md:text-right">
-          <a href={cta} className="btn-accent">
+          <button type="button" onClick={() => setOpen(true)} className="btn-accent">
             {lv.cta.learnMore} <ArrowRight size={16} />
-          </a>
+          </button>
         </div>
       </div>
+      <PromoModal open={open} onClose={() => setOpen(false)} settings={settings} />
     </section>
   );
 }
