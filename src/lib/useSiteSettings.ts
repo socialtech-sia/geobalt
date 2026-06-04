@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -21,14 +20,9 @@ export function useSiteSettings() {
   return useQuery({
     queryKey: ["settings"],
     queryFn: async () => {
-      const { data } = await supabase
-        .from("settings")
-        .select(
-          "contact_phone, contact_email, contact_address_lv, working_hours_lv, promo_enabled, promo_image_url, promo_title_lv, promo_text_lv, promo_cta_url, show_blog, show_reviews, show_rent"
-        )
-        .eq("id", 1)
-        .single();
-      return data as SiteSettings | null;
+      const { data } = await supabase.rpc("get_public_settings");
+      const row = Array.isArray(data) ? data[0] : data;
+      return (row ?? null) as SiteSettings | null;
     },
     staleTime: 60_000,
   });

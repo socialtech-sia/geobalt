@@ -474,6 +474,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_public_settings: {
+        Args: never
+        Returns: {
+          contact_address_lv: string
+          contact_email: string
+          contact_phone: string
+          promo_cta_url: string
+          promo_enabled: boolean
+          promo_image_url: string
+          promo_text_lv: string
+          promo_title_lv: string
+          show_blog: boolean
+          show_rent: boolean
+          show_reviews: boolean
+          working_hours_lv: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
